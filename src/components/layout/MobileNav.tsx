@@ -1,60 +1,65 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { useState } from 'react';
-import { navLinks, megaMenuData } from '@/lib/constants';
+import Image from 'next/image';
+import { megaMenuData } from '@/lib/constants';
 
 interface MobileNavProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+type MenuKey = 'bras' | 'briefs' | 'leggings';
+
+const leftItems = [
+  { num: '01', label: 'Bras', key: 'bras' as MenuKey },
+  { num: '02', label: 'Briefs', key: 'briefs' as MenuKey },
+  { num: '03', label: 'Leggings', key: 'leggings' as MenuKey },
+  { num: '04', label: 'Sale', href: '/sale', isSale: true },
+];
+
+const footerLinks = [
+  { label: 'About', href: '/our-world' },
+  { label: 'Account', href: '#' },
+  { label: 'Contact Us', href: 'https://neiwai.life/pages/contact-us', external: true },
+];
+
 export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
-  const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
-
-  const allLinks = [...navLinks.left, ...navLinks.right];
-
-  const toggleExpand = (label: string) => {
-    setExpandedMenu(expandedMenu === label ? null : label);
-  };
-
-  const megaMenuKeys: Record<string, 'bras' | 'briefs' | 'leggings'> = {
-    'Bras': 'bras',
-    'Briefs': 'briefs',
-    'Leggings': 'leggings',
-  };
-
   return (
-    <AnimatePresence>
+    <motion.AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-charcoal/60 z-40 backdrop-blur-sm"
+            className="fixed inset-0 bg-charcoal/40 z-40 backdrop-blur-sm"
             onClick={onClose}
           />
 
-          {/* Menu Panel */}
           <motion.div
             initial={{ x: '-100%' }}
             animate={{ x: 0 }}
             exit={{ x: '-100%' }}
             transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-            className="fixed inset-y-0 left-0 w-full max-w-[400px] bg-charcoal z-50 overflow-y-auto"
+            className="fixed inset-y-0 left-0 w-full max-w-[400px] bg-white z-50 overflow-y-auto flex flex-col"
           >
-            {/* Close button */}
-            <div className="flex items-center justify-between px-6 h-[60px]">
-              <span className="font-display text-cream text-[20px] font-light tracking-[0.2em]">
-                NEIWAI
-              </span>
+            {/* Header — same left padding as nav so logo aligns with Search */}
+            <div className="flex items-center justify-between px-4 h-[60px] shrink-0">
+              <Link href="/" onClick={onClose} className="flex items-center">
+                <Image
+                  src="/images/logo.png"
+                  alt="NEIWAI"
+                  width={100}
+                  height={28}
+                  className="h-5 w-auto object-contain"
+                />
+              </Link>
               <button
                 onClick={onClose}
-                className="text-stone hover:text-cream transition-colors duration-300"
+                className="text-ink hover:text-taupe transition-colors duration-300"
                 aria-label="Close menu"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -63,170 +68,132 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
               </button>
             </div>
 
-            {/* Navigation Links */}
-            <nav className="px-6 pt-8">
-              <ul className="space-y-1">
-                <motion.li
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1, duration: 0.4 }}
-                >
-                  <Link
-                    href="/"
-                    onClick={onClose}
-                    className="block py-4 font-display text-[28px] font-light text-cream tracking-wide hover:text-blush transition-colors duration-300"
-                  >
-                    Home
-                  </Link>
-                </motion.li>
-                {navLinks.left.map((link, index) => {
-                  const menuKey = megaMenuKeys[link.label];
-                  const hasSubmenu = !!menuKey;
-                  const menuData = menuKey ? megaMenuData[menuKey] : null;
-                  const isExpanded = expandedMenu === link.label;
+            <nav className="px-4 pt-6 pb-12 flex-1 min-h-0">
+              {/* Search */}
+              <div className="mb-[44px] flex items-baseline gap-3">
+                <span className="font-body text-[13px] font-medium tracking-[0.14em] uppercase text-ink shrink-0">
+                  Search
+                </span>
+                <span className="flex-1 h-px bg-ink min-w-0" aria-hidden />
+              </div>
+
+              {/* Zara-style: each block = left label (narrow) + right list; no vertical line */}
+              <div className="space-y-10">
+                {leftItems.map((item) => {
+                  const isBras = 'key' in item && item.key === 'bras' && item.key in megaMenuData;
+                  const links =
+                    'key' in item && item.key in megaMenuData
+                      ? isBras
+                        ? null
+                        : megaMenuData[item.key].columns.flatMap((col) => col.links)
+                      : [];
+                  const brasColumns = isBras ? megaMenuData.bras.columns : null;
 
                   return (
-                    <motion.li
-                      key={link.label}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.15 + index * 0.05, duration: 0.4 }}
-                    >
-                      {hasSubmenu ? (
-                        <div>
-                          <button
-                            onClick={() => toggleExpand(link.label)}
-                            className="w-full flex items-center justify-between py-4 font-display text-[28px] font-light text-cream tracking-wide"
+                    <div key={item.num} className="flex gap-6 items-baseline">
+                      {/* Left: 01 Bras — same size as right column, baseline-aligned with first link */}
+                      <div className="w-[22%] max-w-[88px] shrink-0">
+                        {'href' in item ? (
+                          <Link
+                            href={item.href}
+                            onClick={onClose}
+                            className={`font-body text-[12px] font-medium tracking-wide hover:opacity-80 transition-colors whitespace-nowrap ${
+                              item.isSale ? '' : 'text-ink'
+                            }`}
                           >
-                            <span>{link.label}</span>
-                            <motion.span
-                              animate={{ rotate: isExpanded ? 180 : 0 }}
-                              transition={{ duration: 0.3 }}
-                              className="text-stone text-[16px]"
-                            >
-                              ▾
-                            </motion.span>
-                          </button>
-
-                          <AnimatePresence>
-                            {isExpanded && menuData && (
-                              <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.3 }}
-                                className="overflow-hidden"
+                            <span className="text-taupe">{item.num}</span>
+                            <span className="text-taupe"> | </span>
+                            <span className={item.isSale ? 'text-[#C25835]' : 'text-ink'}>{item.label}</span>
+                          </Link>
+                        ) : (
+                          <span className="font-body text-[12px] font-medium tracking-wide text-ink whitespace-nowrap">
+                            <span className="text-taupe">{item.num}</span>
+                            <span className="text-taupe"> | </span>
+                            <span>{item.label}</span>
+                          </span>
+                        )}
+                      </div>
+                      {/* Right: sub-links — Bras: insert "Shop by need" (same weight as Bras) + extra spacing */}
+                      <ul className="flex-1 min-w-0 space-y-2">
+                        {brasColumns ? (
+                          <>
+                            {brasColumns[0].links.map((sub) => (
+                              <li key={sub.label}>
+                                <Link
+                                  href={sub.href}
+                                  onClick={onClose}
+                                  className={`font-body text-[12px] text-ink/90 hover:text-ink transition-colors block py-1 ${
+                                    sub.label.includes('Sale') ? 'text-[#C25835]' : ''
+                                  }`}
+                                  {...(sub.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                                >
+                                  {sub.label}
+                                </Link>
+                              </li>
+                            ))}
+                            <li className="pt-5">
+                              <span className="font-body text-[12px] font-medium text-ink">Shop by need</span>
+                            </li>
+                            {brasColumns[1].links.map((sub) => (
+                              <li key={sub.label}>
+                                <Link
+                                  href={sub.href}
+                                  onClick={onClose}
+                                  className={`font-body text-[12px] text-ink/90 hover:text-ink transition-colors block py-1 ${
+                                    sub.label.includes('Sale') ? 'text-[#C25835]' : ''
+                                  }`}
+                                  {...(sub.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                                >
+                                  {sub.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </>
+                        ) : (
+                          links.map((sub) => (
+                            <li key={sub.label}>
+                              <Link
+                                href={sub.href}
+                                onClick={onClose}
+                                className={`font-body text-[12px] text-ink/90 hover:text-ink transition-colors block py-1 ${
+                                  sub.label.includes('Sale') ? 'text-[#C25835]' : ''
+                                }`}
+                                {...(sub.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                               >
-                                <div className="pb-4 pl-4 space-y-6">
-                                  {menuData.columns.map((column) => (
-                                    <div key={column.title}>
-                                      <h4 className="font-body text-[11px] font-medium tracking-[0.12em] uppercase text-taupe mb-3">
-                                        {column.title}
-                                      </h4>
-                                      <ul className="space-y-2">
-                                        {column.links.map((subLink) => (
-                                          <li key={subLink.label}>
-                                            <Link
-                                              href={subLink.href}
-                                              onClick={onClose}
-                                              className={`font-body text-[15px] transition-colors duration-300 ${
-                                                subLink.label === 'Shop All Bras'
-                                                  ? 'hover:opacity-80'
-                                                  : 'text-stone hover:text-cream'
-                                              }`}
-                                              {...(subLink.label === 'Shop All Bras' && { style: { color: '#C25835' } })}
-                                            >
-                                              {subLink.label}
-                                            </Link>
-                                          </li>
-                                        ))}
-                                      </ul>
-                                    </div>
-                                  ))}
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </div>
-                      ) : (
-                        <Link
-                          href={link.href}
-                          onClick={onClose}
-                          className="block py-4 font-display text-[28px] font-light text-cream tracking-wide hover:text-blush transition-colors duration-300"
-                        >
-                          {link.label}
-                        </Link>
-                      )}
-                    </motion.li>
+                                {sub.label}
+                              </Link>
+                            </li>
+                          ))
+                        )}
+                      </ul>
+                    </div>
                   );
                 })}
-                <motion.li
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.12 + navLinks.left.length * 0.05, duration: 0.4 }}
-                >
-                  <Link
-                    href="/sale"
-                    onClick={onClose}
-                    className="block py-4 font-display text-[28px] font-light tracking-wide hover:opacity-80 transition-opacity duration-300"
-                    style={{ color: '#C25835' }}
-                  >
-                    Sale
-                  </Link>
-                </motion.li>
-                <motion.li
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.12 + (navLinks.left.length + 1) * 0.05, duration: 0.4 }}
-                >
-                  <Link
-                    href="/our-world"
-                    onClick={onClose}
-                    className="block py-4 font-display text-[28px] font-light text-cream tracking-wide hover:text-blush transition-colors duration-300"
-                  >
-                    About
-                  </Link>
-                </motion.li>
-                {navLinks.right.map((link, index) => {
-                  return (
-                    <motion.li
-                      key={link.label}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.15 + (navLinks.left.length + 2 + index) * 0.05, duration: 0.4 }}
-                    >
+
+                {/* Light grey divider between Sale and About section */}
+                <div className="h-px bg-taupe/40 min-w-0" aria-hidden />
+
+                {/* About, Account, Contact Us — no numbers, separate rows */}
+                <div className="space-y-2 pt-10">
+                  {footerLinks.map((item) => (
+                    <div key={item.label}>
                       <Link
-                        href={link.href}
+                        href={item.href}
                         onClick={onClose}
-                        className="block py-4 font-display text-[28px] font-light text-cream tracking-wide hover:text-blush transition-colors duration-300"
+                        className="font-body text-[13px] font-medium text-ink hover:text-taupe transition-colors block py-1"
+                        {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                       >
-                        {link.label}
+                        {item.label}
                       </Link>
-                    </motion.li>
-                  );
-                })}
-              </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </nav>
 
-            {/* Secondary Links */}
-            <div className="px-6 pt-12 pb-8 border-t border-charcoal mt-8">
-              <ul className="space-y-3">
-                {['Search', 'Account', 'Contact Us'].map((item) => (
-                  <li key={item}>
-                    <Link
-                      href="#"
-                      onClick={onClose}
-                      className="font-body text-[14px] text-stone hover:text-cream transition-colors duration-300"
-                    >
-                      {item}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </motion.AnimatePresence>
   );
 }

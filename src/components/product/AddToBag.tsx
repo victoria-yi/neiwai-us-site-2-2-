@@ -35,7 +35,7 @@ export default function AddToBag({ disabled = false, onAdd, compact = false }: A
         disabled={disabled || state !== 'idle'}
         className={`w-full h-10 font-body text-[13px] tracking-wide transition-all duration-300 ${
           disabled
-            ? 'bg-sand text-stone cursor-not-allowed'
+            ? 'bg-stone text-ink cursor-not-allowed'
             : state === 'success'
             ? 'bg-accent text-cream'
             : 'bg-charcoal text-cream hover:bg-ink'
@@ -55,7 +55,7 @@ export default function AddToBag({ disabled = false, onAdd, compact = false }: A
       disabled={disabled || state !== 'idle'}
       className={`w-full max-w-[320px] h-[46px] font-body text-[13px] tracking-[0.06em] transition-all duration-300 border ${
         disabled
-          ? 'bg-cream text-stone border-sand cursor-not-allowed'
+          ? 'bg-stone text-ink border-stone cursor-not-allowed'
           : state === 'success'
           ? 'bg-accent text-cream border-accent'
           : 'bg-charcoal text-cream border-charcoal hover:bg-ink hover:border-ink'

@@ -128,9 +128,9 @@ export default function BrasProductPage() {
   };
 
   return (
-    <div className="pt-20 lg:pt-24">
-      {/* Breadcrumb */}
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
+    <div className="pt-[60px] lg:pt-24">
+      {/* Breadcrumb — desktop only; hidden on mobile so main image can sit at top */}
+      <div className="hidden lg:block max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
         <nav className="font-body text-[12px] text-taupe flex items-center gap-2">
           <Link href="/" className="hover:text-ink transition-colors duration-300">Home</Link>
           <span>/</span>
@@ -141,10 +141,10 @@ export default function BrasProductPage() {
       </div>
 
       {/* PDP Split Layout */}
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 pb-16 lg:pb-24">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 pb-16 lg:pb-24 overflow-x-hidden lg:overflow-visible">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
-          {/* Gallery — 55% */}
-          <div className="w-full lg:w-[55%]">
+          {/* Gallery — mobile: true full width (100vw breakout); desktop: 55% */}
+          <div className="relative w-[100vw] max-w-none left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0 lg:w-[55%]">
             <ProductGallery product={galleryProduct} selectedColor={selectedColor} />
           </div>
 
@@ -258,7 +258,7 @@ export default function BrasProductPage() {
             )}
 
             <FadeIn delay={0.2}>
-              <div className="mt-7" id="pdp-form-sentinel">
+              <div className="mt-7 hidden lg:block" id="pdp-form-sentinel">
                 <AddToBag disabled={!selectedSize} />
               </div>
             </FadeIn>

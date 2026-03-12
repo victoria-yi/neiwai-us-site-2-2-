@@ -1,9 +1,11 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Product } from '@/lib/products';
+
+const SWIPE_THRESHOLD = 50;
 
 interface ProductGalleryProps {
   product: Product;
@@ -15,10 +17,39 @@ export default function ProductGallery({ product, selectedColor }: ProductGaller
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
 
-  // Thumbnails and main image both use product.images — clicking a thumbnail shows that image
   const thumbnails = product.images;
   const mainImageSrc = product.images[activeIndex] ?? product.images[0];
+  const totalImages = thumbnails.length;
+
+  const goTo = useCallback(
+    (index: number) => {
+      setActiveIndex(Math.max(0, Math.min(index, totalImages - 1)));
+    },
+    [totalImages]
+  );
+
+  const goPrev = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo]);
+  const goNext = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo]);
+
+  // Mobile: swipe handlers
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  }, []);
+
+  const onTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      if (touchStartX.current == null) return;
+      const endX = e.changedTouches[0].clientX;
+      const delta = touchStartX.current - endX;
+      touchStartX.current = null;
+      if (Math.abs(delta) < SWIPE_THRESHOLD) return;
+      if (delta > 0) goNext();
+      else goPrev();
+    },
+    [goPrev, goNext]
+  );
 
   const updateScrollState = () => {
     const el = scrollRef.current;
@@ -28,23 +59,19 @@ export default function ProductGallery({ product, selectedColor }: ProductGaller
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
   };
 
-  // Start with strip scrolled to the left so first thumbnails are visible; sync scroll state
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
     el.scrollLeft = 0;
     const onScroll = () => updateScrollState();
     el.addEventListener('scroll', onScroll);
-    const raf = requestAnimationFrame(() => {
-      updateScrollState();
-    });
+    const raf = requestAnimationFrame(() => updateScrollState());
     return () => {
       el.removeEventListener('scroll', onScroll);
       cancelAnimationFrame(raf);
     };
   }, [product.images.length]);
 
-  // Scroll active thumbnail into view (keep it visible when changing selection)
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -57,14 +84,18 @@ export default function ProductGallery({ product, selectedColor }: ProductGaller
     if (!el) return;
     if (direction === 'left' && !canScrollLeft) return;
     if (direction === 'right' && !canScrollRight) return;
-    const scrollAmount = 88; // thumb width + gap
+    const scrollAmount = 88;
     el.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
   };
 
   return (
     <div>
-      {/* Main Image */}
-      <div className="relative aspect-[3/4] overflow-hidden bg-sand">
+      {/* Main Image — mobile: swipeable + dots overlay; desktop: unchanged */}
+      <div
+        className="relative aspect-[3/4] overflow-hidden bg-sand touch-pan-y select-none lg:select-auto"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
         <AnimatePresence mode="wait">
           <motion.div
             key={activeIndex}
@@ -81,13 +112,36 @@ export default function ProductGallery({ product, selectedColor }: ProductGaller
               className="object-cover object-top"
               sizes="(max-width: 1024px) 100vw, 55vw"
               priority={activeIndex === 0}
+              draggable={false}
             />
           </motion.div>
         </AnimatePresence>
+
+        {/* Mobile only: dot indicators overlaid on image (like neiwai.life) */}
+        {totalImages > 1 && (
+          <div
+            className="absolute bottom-4 left-0 right-0 flex justify-center gap-1.5 lg:hidden"
+            aria-hidden
+          >
+            {thumbnails.map((_, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => setActiveIndex(index)}
+                className={`rounded-full transition-colors ${
+                  activeIndex === index
+                    ? 'h-1.5 w-1.5 bg-white'
+                    : 'h-1.5 w-1.5 border border-white bg-transparent'
+                }`}
+                aria-label={`Image ${index + 1} of ${totalImages}`}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Thumbnail strip — horizontal scroll with arrows */}
-      <div className="mt-4 flex items-center gap-2">
+      {/* Thumbnail strip — desktop only (hidden on mobile) */}
+      <div className="mt-4 hidden lg:flex items-center gap-2">
         <button
           type="button"
           onClick={() => scrollThumbnails('left')}

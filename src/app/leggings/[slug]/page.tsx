@@ -8,12 +8,13 @@ import SizeSelector from '@/components/product/SizeSelector';
 import ColorSwatches from '@/components/product/ColorSwatches';
 import AddToBag from '@/components/product/AddToBag';
 import ProductAccordion from '@/components/product/ProductAccordion';
-import ProductCard from '@/components/product/ProductCard';
 import TechnologyStory from '@/components/product/TechnologyStory';
 import FloatingCartBar from '@/components/product/FloatingCartBar';
+import CompleteTheSetPDP from '@/components/product/CompleteTheSetPDP';
+import YouMayAlsoLikePDP from '@/components/product/YouMayAlsoLikePDP';
 import FadeIn from '@/components/ui/FadeIn';
 import Overline from '@/components/ui/Overline';
-import { getProductBySlug, getRelatedProducts } from '@/lib/products';
+import { getProductBySlug, getMatchingSetBriefs, getYouMayAlsoLikeBras } from '@/lib/products';
 import { formatPrice } from '@/lib/utils';
 
 export default function LeggingsProductPage() {
@@ -49,7 +50,10 @@ export default function LeggingsProductPage() {
     );
   }
 
-  const relatedProducts = getRelatedProducts(product, 3);
+  // Placeholder: use Barely Zero Strap Bra's Complete the set & You may also like (same layout/content as bras PDP)
+  const strapBraProduct = getProductBySlug('barely-zero-strap-bra');
+  const matchingSetBriefs = strapBraProduct ? getMatchingSetBriefs(strapBraProduct, 2) : [];
+  const youMayAlsoLikePlaceholder = strapBraProduct ? getYouMayAlsoLikeBras(strapBraProduct, 5) : [];
 
   const accordionItems = [
     {
@@ -67,9 +71,9 @@ export default function LeggingsProductPage() {
   ];
 
   return (
-    <div className="pt-20 lg:pt-24">
-      {/* Breadcrumb */}
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
+    <div className="pt-[60px] lg:pt-24">
+      {/* Breadcrumb — desktop only; hidden on mobile so main image can sit at top */}
+      <div className="hidden lg:block max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
         <nav className="font-body text-[12px] text-taupe flex items-center gap-2">
           <Link href="/" className="hover:text-ink transition-colors duration-300">Home</Link>
           <span>/</span>
@@ -80,10 +84,10 @@ export default function LeggingsProductPage() {
       </div>
 
       {/* PDP Split Layout */}
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 pb-16 lg:pb-24">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 pb-16 lg:pb-24 overflow-x-hidden lg:overflow-visible">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
-          {/* Gallery — 55% */}
-          <div className="w-full lg:w-[55%]">
+          {/* Gallery — mobile: true full width (100vw breakout); desktop: 55% */}
+          <div className="relative w-[100vw] max-w-none left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0 lg:w-[55%]">
             <ProductGallery product={product} selectedColor={selectedColor} />
           </div>
 
@@ -176,7 +180,7 @@ export default function LeggingsProductPage() {
             )}
 
             <FadeIn delay={0.2}>
-              <div className="mt-7" id="pdp-form-sentinel">
+              <div className="mt-7 hidden lg:block" id="pdp-form-sentinel">
                 <AddToBag disabled={!selectedSize} />
               </div>
             </FadeIn>
@@ -210,20 +214,13 @@ export default function LeggingsProductPage() {
         />
       )}
 
-      {/* Complete the Look */}
-      {relatedProducts.length > 0 && (
-        <section className="max-w-[1440px] mx-auto px-6 lg:px-20 py-16 lg:pb-32 lg:py-24 border-t border-sand">
-          <FadeIn>
-            <Overline>Complete the Look</Overline>
-          </FadeIn>
-
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10">
-            {relatedProducts.map((p, i) => (
-              <ProductCard key={p.id} product={p} index={i} />
-            ))}
-          </div>
-        </section>
+      {/* Complete the set — same as Barely Zero Strap Bra PDP (placeholder for layout) */}
+      {matchingSetBriefs.length > 0 && (
+        <CompleteTheSetPDP briefs={matchingSetBriefs} />
       )}
+
+      {/* You may also like — same as Barely Zero Strap Bra PDP (placeholder for layout) */}
+      <YouMayAlsoLikePDP products={youMayAlsoLikePlaceholder} />
     </div>
   );
 }

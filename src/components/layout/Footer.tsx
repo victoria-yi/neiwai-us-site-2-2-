@@ -21,13 +21,13 @@ export default function Footer() {
     <footer className="bg-charcoal text-cream">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-16 lg:py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
-          {/* Our World */}
+          {/* About */}
           <div>
             <h3 className="font-body text-[11px] font-medium tracking-[0.12em] uppercase text-stone mb-6">
-              Our World
+              About
             </h3>
             <ul className="space-y-3">
-              {footerLinks.ourWorld.map((link) => (
+              {footerLinks.about.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}

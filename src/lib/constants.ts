@@ -76,13 +76,6 @@ export const megaMenuData = {
         ],
       },
       {
-        title: 'Multi-Packs',
-        links: [
-          { label: 'UltraFlex Light Brief 3-Pack', href: '/briefs/ultraflex-light-brief-3-pack' },
-          { label: 'UltraFlex Cotton Brief 3-Pack', href: '/briefs/ultraflex-cotton-brief-3-pack' },
-        ],
-      },
-      {
         title: 'Explore',
         links: [
           { label: 'Shop All Briefs', href: '/briefs' },
@@ -127,8 +120,8 @@ export const megaMenuData = {
 } as const;
 
 export const footerLinks = {
-  ourWorld: [
-    { label: 'Our Philosophy', href: 'https://neiwai.life/pages/our-story' },
+  about: [
+    { label: 'About', href: 'https://neiwai.life/pages/our-story' },
     { label: 'The Atelier', href: '/our-world/atelier' },
     { label: 'Journal', href: '/our-world/journal' },
     { label: 'Careers', href: 'https://neiwai.life/pages/press' },

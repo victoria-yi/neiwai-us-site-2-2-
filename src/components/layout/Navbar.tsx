@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence } from 'framer-motion';
 import { navLinks } from '@/lib/constants';
@@ -150,9 +151,15 @@ export default function Navbar() {
           {/* Center Logo */}
           <Link
             href="/"
-            className={`font-display text-[20px] font-light tracking-[0.2em] transition-colors duration-300 ${textColor} absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0 lg:text-center lg:flex-1 lg:flex lg:justify-center`}
+            className="absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0 lg:flex-1 lg:flex lg:justify-center"
           >
-            NEIWAI
+            <Image
+              src="/images/logo.png"
+              alt="NEIWAI"
+              width={100}
+              height={28}
+              className="h-4 w-auto lg:h-5 object-contain"
+            />
           </Link>
 
           {/* Right Nav */}

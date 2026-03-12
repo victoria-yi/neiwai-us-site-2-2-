@@ -8,13 +8,13 @@ import SizeSelector from '@/components/product/SizeSelector';
 import ColorSwatches from '@/components/product/ColorSwatches';
 import AddToBag from '@/components/product/AddToBag';
 import ProductAccordion from '@/components/product/ProductAccordion';
-import ProductCard from '@/components/product/ProductCard';
-import YouMayAlsoLikeCard from '@/components/product/YouMayAlsoLikeCard';
 import TechnologyStory from '@/components/product/TechnologyStory';
 import FloatingCartBar from '@/components/product/FloatingCartBar';
+import CompleteTheSetPDP from '@/components/product/CompleteTheSetPDP';
+import YouMayAlsoLikePDP from '@/components/product/YouMayAlsoLikePDP';
 import FadeIn from '@/components/ui/FadeIn';
 import Overline from '@/components/ui/Overline';
-import { getProductBySlug, getRelatedProducts, getYouMayAlsoLikeBriefs } from '@/lib/products';
+import { getProductBySlug, getMatchingSetBriefs, getYouMayAlsoLikeBras } from '@/lib/products';
 import { formatPrice } from '@/lib/utils';
 
 const lineLabels: Record<string, string> = {
@@ -55,8 +55,10 @@ export default function BriefsProductPage() {
     );
   }
 
-  const relatedProducts = getRelatedProducts(product, 3);
-  const youMayAlsoLike = getYouMayAlsoLikeBriefs(product, 4);
+  // Placeholder: use Barely Zero Strap Bra's Complete the set & You may also like (same layout/content as bras PDP)
+  const strapBraProduct = getProductBySlug('barely-zero-strap-bra');
+  const matchingSetBriefs = strapBraProduct ? getMatchingSetBriefs(strapBraProduct, 2) : [];
+  const youMayAlsoLikePlaceholder = strapBraProduct ? getYouMayAlsoLikeBras(strapBraProduct, 5) : [];
   const lineLabel = lineLabels[product.line] ?? 'Briefs';
 
   const accordionItems = [
@@ -75,9 +77,9 @@ export default function BriefsProductPage() {
   ];
 
   return (
-    <div className="pt-20 lg:pt-24">
-      {/* Breadcrumb */}
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
+    <div className="pt-[60px] lg:pt-24">
+      {/* Breadcrumb — desktop only; hidden on mobile so main image can sit at top */}
+      <div className="hidden lg:block max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
         <nav className="font-body text-[12px] text-taupe flex items-center gap-2">
           <Link href="/" className="hover:text-ink transition-colors duration-300">Home</Link>
           <span>/</span>
@@ -88,10 +90,10 @@ export default function BriefsProductPage() {
       </div>
 
       {/* PDP Split Layout */}
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 pb-16 lg:pb-24">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 pb-16 lg:pb-24 overflow-x-hidden lg:overflow-visible">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
-          {/* Gallery — 55% */}
-          <div className="w-full lg:w-[55%]">
+          {/* Gallery — mobile: true full width (100vw breakout); desktop: 55% */}
+          <div className="relative w-[100vw] max-w-none left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0 lg:w-[55%]">
             <ProductGallery product={product} selectedColor={selectedColor} />
           </div>
 
@@ -184,7 +186,7 @@ export default function BriefsProductPage() {
             )}
 
             <FadeIn delay={0.2}>
-              <div className="mt-7" id="pdp-form-sentinel">
+              <div className="mt-7 hidden lg:block" id="pdp-form-sentinel">
                 <AddToBag disabled={!selectedSize} />
               </div>
             </FadeIn>
@@ -218,44 +220,13 @@ export default function BriefsProductPage() {
         />
       )}
 
-      {/* Complete the Look — 1/4 text left (vertically centered), 3/4 three images right */}
-      {relatedProducts.length > 0 && (
-        <section className="w-full border-t border-sand py-16 lg:py-24">
-          <FadeIn className="flex flex-col lg:flex-row lg:items-center w-full">
-            <div className="px-6 lg:pl-20 lg:w-1/4 lg:min-w-0 lg:pr-8 flex flex-col justify-center">
-              <h2 className="font-display text-[22px] lg:text-[28px] font-light text-ink tracking-tight">
-                Complete the Look
-              </h2>
-              <p className="font-body text-[13px] lg:text-[14px] text-taupe mt-2 lg:mt-3 leading-relaxed">
-                We've handpicked the perfect styles to complement your look.
-              </p>
-            </div>
-            <div className="mt-8 lg:mt-0 lg:flex-[0_0_75%] lg:w-3/4 grid grid-cols-3 gap-1.5 sm:gap-2 lg:gap-2 pr-6 lg:pr-0 w-full overflow-hidden min-w-0">
-              {relatedProducts.map((p, i) => (
-                <ProductCard key={p.id} product={p} index={i} />
-              ))}
-            </div>
-          </FadeIn>
-        </section>
+      {/* Complete the set — same as Barely Zero Strap Bra PDP (placeholder for layout) */}
+      {matchingSetBriefs.length > 0 && (
+        <CompleteTheSetPDP briefs={matchingSetBriefs} />
       )}
 
-      {/* You may also like — align with Complete the Look: 1/4 title, 3/4 four images edge-to-edge */}
-      {youMayAlsoLike.length > 0 && (
-        <section className="w-full border-t border-sand py-16 lg:py-24">
-          <FadeIn className="flex flex-col lg:flex-row lg:items-center w-full">
-            <div className="px-6 lg:pl-20 lg:w-1/4 lg:min-w-0 lg:pr-8 flex flex-col justify-center">
-              <h2 className="font-display text-[22px] lg:text-[28px] font-light text-ink tracking-tight">
-                You may also like
-              </h2>
-            </div>
-            <div className="mt-8 lg:mt-0 lg:flex-[0_0_75%] lg:w-3/4 grid grid-cols-2 lg:grid-cols-4 gap-1.5 sm:gap-2 lg:gap-2 pr-6 lg:pr-0 w-full overflow-hidden min-w-0">
-              {youMayAlsoLike.map((p) => (
-                <YouMayAlsoLikeCard key={p.id} product={p} />
-              ))}
-            </div>
-          </FadeIn>
-        </section>
-      )}
+      {/* You may also like — same as Barely Zero Strap Bra PDP (placeholder for layout) */}
+      <YouMayAlsoLikePDP products={youMayAlsoLikePlaceholder} />
     </div>
   );
 }
