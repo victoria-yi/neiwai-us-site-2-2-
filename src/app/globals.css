@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-cream: #F5F5F5;
+  --color-warm-white: #FAFAFA;
+  --color-ink: #1A1714;
+  --color-sand: #EBEBE8;
+  --color-section-gray: #F0F0F0;
+  --color-stone: #C4C0B8;
+  --color-taupe: #8E8780;
+  --color-prose: #6B6560;
+  --color-charcoal: #2C2824;
+  --color-accent: #8B7355;
+  --color-blush: #E5DDD5;
+  --color-sage: #C5CDB8;
+
+  --font-display: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: #F5F5F5;
+    --foreground: #1A1714;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+  }
+
+  ::selection {
+    background-color: #E5DDD5;
+    color: #1A1714;
+  }
+
+  /* Focus states for keyboard navigation */
+  :focus-visible {
+    outline: 2px solid #8B7355;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #F5F5F5;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #C4C0B8;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #8E8780;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Utility classes */
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .font-body {
+    font-family: var(--font-body);
+  }
+  .overline {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
