@@ -141,9 +141,9 @@ export default function FloatingCartBar({
     <AnimatePresence>
       {visible && (
         <motion.div
-          initial={isDesktop ? { y: 100, opacity: 0 } : false}
+          initial={isDesktop ? { y: 100, opacity: 0 } : undefined}
           animate={{ y: 0, opacity: 1 }}
-          exit={isDesktop ? { y: 100, opacity: 0 } : false}
+          exit={isDesktop ? { y: 100, opacity: 0 } : undefined}
           transition={{ duration: 0.25 }}
           className="fixed bottom-0 left-0 right-0 z-40 bg-cream/98 backdrop-blur-md border-t border-sand shadow-[0_-4px 24px rgba(0,0,0,0.06)]"
         >

@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { megaMenuData } from '@/lib/constants';
@@ -27,7 +27,7 @@ const footerLinks = [
 
 export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
   return (
-    <motion.AnimatePresence>
+    <AnimatePresence>
       {isOpen && (
         <>
           <motion.div
@@ -80,12 +80,13 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
               {/* Zara-style: each block = left label (narrow) + right list; no vertical line */}
               <div className="space-y-10">
                 {leftItems.map((item) => {
-                  const isBras = 'key' in item && item.key === 'bras' && item.key in megaMenuData;
+                  const itemKey = 'key' in item ? item.key : undefined;
+                  const isBras = itemKey === 'bras';
                   const links =
-                    'key' in item && item.key in megaMenuData
+                    itemKey && itemKey in megaMenuData
                       ? isBras
                         ? null
-                        : megaMenuData[item.key].columns.flatMap((col) => col.links)
+                        : megaMenuData[itemKey].columns.flatMap((col) => col.links as unknown as { label: string; href: string }[])
                       : [];
                   const brasColumns = isBras ? megaMenuData.bras.columns : null;
 
@@ -95,7 +96,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                       <div className="w-[22%] max-w-[88px] shrink-0">
                         {'href' in item ? (
                           <Link
-                            href={item.href}
+                            href={item.href!}
                             onClick={onClose}
                             className={`font-body text-[12px] font-medium tracking-wide hover:opacity-80 transition-colors whitespace-nowrap ${
                               item.isSale ? '' : 'text-ink'
@@ -125,7 +126,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                                   className={`font-body text-[12px] text-ink/90 hover:text-ink transition-colors block py-1 ${
                                     sub.label.includes('Sale') ? 'text-[#C25835]' : ''
                                   }`}
-                                  {...(sub.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                                  {...('external' in sub && sub.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                                 >
                                   {sub.label}
                                 </Link>
@@ -142,7 +143,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                                   className={`font-body text-[12px] text-ink/90 hover:text-ink transition-colors block py-1 ${
                                     sub.label.includes('Sale') ? 'text-[#C25835]' : ''
                                   }`}
-                                  {...(sub.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                                  {...('external' in sub && sub.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                                 >
                                   {sub.label}
                                 </Link>
@@ -150,7 +151,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                             ))}
                           </>
                         ) : (
-                          links.map((sub) => (
+                          (links ?? []).map((sub) => (
                             <li key={sub.label}>
                               <Link
                                 href={sub.href}
@@ -158,7 +159,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                                 className={`font-body text-[12px] text-ink/90 hover:text-ink transition-colors block py-1 ${
                                   sub.label.includes('Sale') ? 'text-[#C25835]' : ''
                                 }`}
-                                {...(sub.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                                {...('external' in sub && sub.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                               >
                                 {sub.label}
                               </Link>
@@ -194,6 +195,6 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
           </motion.div>
         </>
       )}
-    </motion.AnimatePresence>
+    </AnimatePresence>
   );
 }
