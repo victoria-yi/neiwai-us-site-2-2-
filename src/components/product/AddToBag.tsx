@@ -50,10 +50,10 @@ const AddToBag = forwardRef<AddToBagHandle, AddToBagProps>(function AddToBag(
         onClick={handleClick}
         disabled={compactDisabled}
         className={`w-full h-10 font-body text-[14px] tracking-wide transition-all duration-300 rounded-none ${
-          compactDisabled
-            ? 'bg-stone text-ink cursor-not-allowed'
-            : state === 'success'
+          state === 'success'
             ? 'bg-accent text-cream'
+            : compactDisabled
+            ? 'bg-stone text-ink cursor-not-allowed'
             : 'bg-black text-white hover:opacity-90'
         }`}
         whileTap={!compactDisabled ? { scale: 0.98 } : {}}
@@ -71,10 +71,10 @@ const AddToBag = forwardRef<AddToBagHandle, AddToBagProps>(function AddToBag(
       onClick={handleClick}
       disabled={pdpDisabled}
       className={`w-full h-[46px] font-body text-[15px] tracking-[0.06em] transition-all duration-300 border ${
-        pdpDisabled
-          ? 'bg-stone text-ink border-stone cursor-not-allowed'
-          : state === 'success'
+        state === 'success'
           ? 'bg-accent text-cream border-accent'
+          : pdpDisabled
+          ? 'bg-stone text-ink border-stone cursor-not-allowed'
           : 'bg-[#E5E5E5] text-ink border-[#E5E5E5] hover:opacity-90'
       }`}
       whileTap={!pdpDisabled ? { scale: 0.98 } : {}}
