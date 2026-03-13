@@ -4,14 +4,19 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import AddToBag from './AddToBag';
-import type { Product } from '@/lib/products';
+import type { Product, ProductColor } from '@/lib/products';
 import { formatPrice } from '@/lib/utils';
 
 interface FloatingCartBarProps {
   product: Product;
   selectedColor: string | null;
   selectedSize: string | null;
+  /** When provided (e.g. variant PDP), use these instead of product.colors */
+  colors?: ProductColor[];
+  onColorSelect?: (color: string) => void;
+  onSizeSelect?: (size: string) => void;
   onAddToBag?: () => void;
+  onNoSizeClick?: () => void;
 }
 
 function getDisplayImage(product: Product, selectedColor: string | null): string {
@@ -37,11 +42,16 @@ export default function FloatingCartBar({
   product,
   selectedColor,
   selectedSize,
+  colors: colorsProp,
+  onColorSelect,
+  onSizeSelect,
   onAddToBag,
+  onNoSizeClick,
 }: FloatingCartBarProps) {
   const [visible, setVisible] = useState(false);
   const [addState, setAddState] = useState<'idle' | 'loading' | 'success'>('idle');
   const isDesktop = useIsDesktop();
+  const colors = colorsProp ?? product.colors;
 
   useEffect(() => {
     if (!isDesktop) {
@@ -63,7 +73,11 @@ export default function FloatingCartBar({
   const disabled = !selectedSize;
 
   const handleAddToCart = async () => {
-    if (disabled || addState !== 'idle') return;
+    if (addState !== 'idle') return;
+    if (disabled) {
+      onNoSizeClick?.();
+      return;
+    }
     setAddState('loading');
     await new Promise((r) => setTimeout(r, 800));
     setAddState('success');
@@ -72,42 +86,92 @@ export default function FloatingCartBar({
   };
 
   const handleBuyNow = async () => {
-    if (disabled) return;
+    if (disabled) {
+      onNoSizeClick?.();
+      return;
+    }
     await handleAddToCart();
     // Could navigate to checkout here
   };
 
   const barContent = isDesktop ? (
-    <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-4">
-      <div className="flex items-center gap-4 lg:gap-6">
-        <div className="relative w-14 h-14 lg:w-16 lg:h-16 shrink-0 overflow-hidden bg-sand rounded">
-          {displayImage && (
+    <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-3">
+      <div className="flex items-center gap-4 lg:gap-6 flex-wrap">
+        {/* Logo / product thumbnail — circular */}
+        <div className="relative w-10 h-10 shrink-0 overflow-hidden bg-charcoal rounded-full">
+          {displayImage ? (
             <Image
               src={displayImage}
               alt={product.name}
               fill
               className="object-cover"
-              sizes="64px"
+              sizes="40px"
             />
+          ) : (
+            <span className="absolute inset-0 flex items-center justify-center font-display text-[14px] font-medium text-cream">
+              {product.name.charAt(0)}
+            </span>
           )}
         </div>
-        <div className="min-w-0 flex-1">
-          <h3 className="font-display text-[14px] lg:text-[16px] font-light text-ink truncate">
-            {product.name}
-          </h3>
-          <p className="font-body text-[14px] text-ink mt-0.5">
-            {formatPrice(product.price)}
-          </p>
-          {(selectedColor || selectedSize) && (
-            <p className="font-body text-[12px] text-taupe mt-1">
-              {[selectedColor, selectedSize].filter(Boolean).join(' · ')}
-            </p>
-          )}
+        {/* Product name + price inline */}
+        <div className="font-body text-[15px] text-ink shrink-0">
+          <span className="font-light">{product.name}</span>
+          <span className="ml-4 font-medium">{formatPrice(product.price)}</span>
         </div>
-        <div className="w-full max-w-[200px] lg:max-w-[240px] shrink-0">
+        {/* Spacer — pushes color/size block right toward the Add to cart button */}
+        <div className="flex-1 min-w-[80px]" aria-hidden />
+        {/* Color swatches */}
+        {colors.length > 0 && (
+          <div className="flex items-center gap-2 shrink-0">
+            {colors.map((c) => {
+              const isActive = selectedColor === c.name;
+              return (
+                <button
+                  key={c.name}
+                  type="button"
+                  onClick={() => onColorSelect?.(c.name)}
+                  className={`w-6 h-6 rounded-full shrink-0 transition-all duration-200 ${
+                    isActive ? 'ring-2 ring-ink ring-offset-1 ring-offset-cream' : 'ring-1 ring-sand hover:ring-stone'
+                  }`}
+                  style={{ backgroundColor: c.hex }}
+                  aria-label={`Color ${c.name}`}
+                />
+              );
+            })}
+          </div>
+        )}
+        {/* Size buttons — sharp corners */}
+        {product.sizes.length > 0 && (
+          <div className="flex items-center gap-2 shrink-0">
+            {product.sizes.map((size) => {
+              const isActive = selectedSize === size;
+              return (
+                <button
+                  key={size}
+                  type="button"
+                  onClick={() => onSizeSelect?.(size)}
+                  className={`min-w-[52px] h-8 px-3 font-body text-[12px] rounded-none transition-all duration-200 ${
+                    isActive
+                      ? 'bg-charcoal text-cream'
+                      : 'bg-cream text-ink border border-charcoal/20 hover:border-charcoal'
+                  }`}
+                >
+                  {size}
+                </button>
+              );
+            })}
+          </div>
+        )}
+        {/* Size and Fit label */}
+        {product.sizes.length > 1 && (
+          <span className="font-body text-[11px] text-taupe shrink-0">Size and Fit</span>
+        )}
+        {/* Add to cart — 190px gap from color/size, pure black button */}
+        <div className="ml-[190px] w-full max-w-[200px] shrink-0">
           <AddToBag
             disabled={disabled}
             onAdd={onAddToBag}
+            onNoSizeClick={onNoSizeClick}
             compact
           />
         </div>
@@ -118,18 +182,17 @@ export default function FloatingCartBar({
       <button
         type="button"
         onClick={handleAddToCart}
-        disabled={disabled || addState !== 'idle'}
+        disabled={addState !== 'idle'}
         className="flex-1 h-[53px] font-body text-[15px] font-medium tracking-wide bg-white text-ink border-0 disabled:bg-white disabled:text-ink disabled:cursor-not-allowed active:opacity-90 transition-opacity"
       >
         {addState === 'loading' && 'Adding...'}
         {addState === 'success' && 'Added ✓'}
-        {addState === 'idle' && disabled && 'Select size'}
-        {addState === 'idle' && !disabled && 'Add to cart'}
+        {addState === 'idle' && 'Add to cart'}
       </button>
       <button
         type="button"
         onClick={handleBuyNow}
-        disabled={disabled}
+        disabled={addState !== 'idle'}
         className="flex-1 h-[53px] font-body text-[15px] font-medium tracking-wide bg-ink text-white border-0 disabled:bg-ink disabled:text-white disabled:opacity-60 disabled:cursor-not-allowed active:opacity-90 transition-opacity"
       >
         Buy now

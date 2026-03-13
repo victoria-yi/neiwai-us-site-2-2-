@@ -47,7 +47,7 @@ export default function CompleteTheSetPDP({ briefs }: CompleteTheSetPDPProps) {
                   />
                 </div>
                 <div className="pt-5 pb-2 border-b border-stone/30">
-                  <h3 className="font-display text-[14px] lg:text-[25px] font-light text-ink leading-[1.2]">
+                  <h3 className="font-pdp-title text-[12px] lg:text-[22px] font-light text-ink leading-[1.2]">
                     {p.name}
                   </h3>
                   <div className="flex items-center justify-between mt-3">

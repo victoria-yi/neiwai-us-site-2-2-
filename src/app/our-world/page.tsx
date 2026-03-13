@@ -1,209 +1,188 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import FadeIn from '@/components/ui/FadeIn';
 import Overline from '@/components/ui/Overline';
-import TextLink from '@/components/ui/TextLink';
 
 export default function OurWorldPage() {
   return (
     <>
-      {/* Section 1: Opening — Full-bleed hero */}
-      <section className="relative h-[70vh] lg:h-[80vh] overflow-hidden flex items-end">
-        <Image
-          src="https://neiwai.life/cdn/shop/files/AboutUs_min.png?v=1722883181&width=1920"
-          alt="NEIWAI — Inside and Outside"
-          fill
-          className="object-cover"
-          priority
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/60 via-charcoal/20 to-charcoal/10" />
-
-        <div className="relative w-full max-w-[1440px] mx-auto px-6 lg:px-20 pb-16 lg:pb-24">
+      {/* Section 1: Our Story */}
+      <section className="pt-[160px] lg:pt-[196px] pb-24 lg:pb-32 px-6 lg:px-20 max-w-[1440px] mx-auto">
+        <div className="max-w-[720px] mx-auto text-center">
           <FadeIn>
-            <p className="font-display text-[64px] lg:text-[96px] font-light text-cream/30 leading-none">
-              内外
-            </p>
-            <h1 className="font-display text-[36px] lg:text-[52px] font-light text-cream mt-2 leading-[1.1]">
-              Inside and Outside
-            </h1>
-            <p className="font-body text-[16px] text-cream/70 mt-4 max-w-[400px]">
-              Born from a philosophy of duality. Designed for the space between.
+            <p className="font-pdp-title text-[14px] lg:text-[15px] text-ink leading-[1.8]">
+              NEIWAI (ney·why), meaning &ldquo;inside and outside,&rdquo; was founded in Shanghai in 2012.
+              We seamlessly blend aesthetics and functionality for styles that are &ldquo;Made To Live In.&rdquo;
+              Our lingerie, loungewear, and activewear prioritize comfort that moves with you throughout your day.
+              We unite the luxurious feel of our premium fabrics with innovative designs, fostering a state of
+              ease and harmony, inside and out.
             </p>
           </FadeIn>
         </div>
       </section>
 
-      {/* Section 2: Philosophy — Scrolling narrative */}
-      <section className="py-24 lg:py-40 px-6 lg:px-20 max-w-[1440px] mx-auto">
-        <div className="max-w-[720px] mx-auto">
+      {/* Section 2 & 3: Meet Barely Zero + A cleaner planet — side by side, text overlaid on image */}
+      <section className="-mt-[10px] py-16 lg:py-24 px-6 lg:px-20 max-w-[1440px] mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+          {/* Meet Barely Zero — text on image */}
           <FadeIn>
-            <Overline>Our Philosophy</Overline>
-            <h2 className="font-display text-[32px] lg:text-[44px] font-light text-ink mt-6 leading-[1.2]">
-              The harmony between inner comfort and outer beauty
-            </h2>
-          </FadeIn>
-
-          <FadeIn delay={0.1}>
-            <p className="font-body text-[16px] text-taupe mt-10 leading-[1.8]">
-              NEIWAI (内外) was founded in 2012 with a simple belief: 
-              the relationship between what we wear closest to our skin and how we 
-              move through the world is more intimate than fashion acknowledges.
-            </p>
-          </FadeIn>
-
-          <FadeIn delay={0.15}>
-            <p className="font-body text-[16px] text-taupe mt-6 leading-[1.8]">
-              内 (nèi) means &ldquo;inside&rdquo; — the private self, the body as it truly is, 
-              the comfort that begins at the skin. 外 (wài) means &ldquo;outside&rdquo; — the 
-              world we meet each day, the confidence that radiates from genuine comfort.
-            </p>
-          </FadeIn>
-
-          <FadeIn delay={0.2}>
-            <p className="font-body text-[16px] text-taupe mt-6 leading-[1.8]">
-              Between these two characters lives our purpose: to dissolve the boundary 
-              between inside and outside, creating garments so attuned to the body that 
-              they become an extension of self. Not armor. Not decoration. A second skin.
-            </p>
-          </FadeIn>
-        </div>
-
-        {/* Full-width image break */}
-        <FadeIn delay={0.1}>
-          <div className="mt-20 lg:mt-32 relative h-[40vh] lg:h-[50vh] overflow-hidden">
-            <Image
-              src="https://neiwai.life/cdn/shop/files/20250908-104140.jpg?v=1757353319&width=1920"
-              alt="NEIWAI atelier and design process"
-              fill
-              className="object-cover"
-              sizes="100vw"
-            />
-          </div>
-        </FadeIn>
-
-        <div className="max-w-[720px] mx-auto mt-20 lg:mt-32">
-          <FadeIn>
-            <h2 className="font-display text-[28px] lg:text-[36px] font-light text-ink leading-[1.25]">
-              An Eastern design sensibility
-            </h2>
-          </FadeIn>
-
-          <FadeIn delay={0.1}>
-            <p className="font-body text-[16px] text-taupe mt-8 leading-[1.8]">
-              NEIWAI draws from a tradition of contrasts held in exquisite tension: 
-              traditional and modern, Eastern and Western, intimate and cosmopolitan. 
-              A design language defined by restraint, material obsession, and quiet 
-              confidence — born where ancient craft meets contemporary vision.
-            </p>
-          </FadeIn>
-
-          <FadeIn delay={0.15}>
-            <p className="font-body text-[16px] text-taupe mt-6 leading-[1.8]">
-              We don&apos;t chase trends. We pursue the invisible: the perfect weight of 
-              fabric against skin, the seamless construction that eliminates awareness 
-              of wearing anything at all, the color palette that harmonizes with every 
-              skin tone and every wardrobe.
-            </p>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* Section 3: The Atelier */}
-      <section className="py-24 lg:py-40 bg-sand/30">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-20">
-          <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
-            <FadeIn className="w-full lg:w-1/2">
-              <div className="relative aspect-[4/5] overflow-hidden">
+            <Link href="/bras" className="group block">
+              <div className="relative aspect-[4/5] lg:aspect-[3/4] overflow-hidden">
                 <Image
-                  src="https://neiwai.life/cdn/shop/files/20250908-104305.jpg?v=1757370825&width=1200"
-                  alt="NEIWAI Atelier"
+                  src="/images/our-world/meet-barely-zero.png"
+                  alt="Barely Zero wireless bras and underwear"
                   fill
-                  className="object-cover"
+                  className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
+                <div className="absolute inset-0 bg-charcoal/30" />
+                <div className="absolute inset-0 flex flex-col justify-center items-center p-6 lg:p-8 text-center font-pdp-title">
+                  <h2 className="font-pdp-title text-[28px] lg:text-[36px] font-light text-cream leading-[1.25]">
+                    Meet Barely Zero
+                  </h2>
+                  <p className="font-pdp-title text-[15px] lg:text-[16px] text-cream/90 mt-3 leading-relaxed max-w-[320px]">
+                    Experience all-day comfort with our best-selling wireless bra collection.
+                  </p>
+                  <span className="font-pdp-title text-[13px] text-cream/80 mt-4 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                    Shop Barely Zero
+                    <span>→</span>
+                  </span>
+                </div>
               </div>
-            </FadeIn>
+            </Link>
+          </FadeIn>
 
-            <div className="w-full lg:w-1/2">
-              <FadeIn>
-                <Overline>The Atelier</Overline>
-                <h2 className="font-display text-[28px] lg:text-[36px] font-light text-ink mt-4 leading-[1.25]">
-                  Where material science meets intention
+          {/* A cleaner planet — text on image */}
+          <FadeIn delay={0.1}>
+            <div className="relative aspect-[4/5] lg:aspect-[3/4] overflow-hidden">
+              <Image
+                src="/images/our-world/cleaner-planet.png"
+                alt="Barely Zero sustainable packaging"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-charcoal/30" />
+              <div className="absolute inset-0 flex flex-col justify-center items-center p-6 lg:p-8 text-center font-pdp-title">
+                <span className="font-pdp-title text-[11px] tracking-[0.14em] uppercase text-cream/70">
+                  Sustainability
+                </span>
+                <h2 className="font-pdp-title text-[28px] lg:text-[36px] font-light text-cream mt-2 leading-[1.25]">
+                  A cleaner planet
                 </h2>
+                <p className="font-pdp-title text-[15px] lg:text-[16px] text-cream/90 mt-3 leading-relaxed max-w-[320px]">
+                  We carefully source materials from high-quality, eco-conscious suppliers like PrimaLoft®, VITA,
+                  True Carbon Zero by TENCEL™ and other brands that share our commitment to a cleaner planet.
+                </p>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* Section 5: Giving Back — centered, black Optima */}
+      <section className="pt-16 lg:pt-24 pb-[144px] lg:pb-[176px] px-6 lg:px-20 max-w-[1440px] mx-auto">
+        <FadeIn>
+          <div className="max-w-[720px] mx-auto text-center font-pdp-title text-ink">
+            <Overline className="font-pdp-title text-ink">Giving Back</Overline>
+            <h2 className="font-pdp-title text-[28px] lg:text-[36px] font-light text-ink mt-4 leading-[1.25]">
+              Supporting women&apos;s health and advancement
+            </h2>
+            <p className="font-pdp-title text-[16px] text-ink mt-6 leading-[1.8]">
+              NEIWAI is proud to partner with organizations that support women&apos;s health and advancement.
+              Some of our partners include:
+            </p>
+            <ul className="mt-8 space-y-6 text-center">
+              <li className="font-pdp-title text-[15px] text-ink leading-relaxed">
+                <strong className="underline">I Support the Girls</strong> collects and distributes bras,
+                menstrual hygiene products, and other essentials to women experiencing homelessness or distress.
+                Our NYC Store is a bra and menstrual hygiene product donation site for ISTG!
+              </li>
+              <li className="font-pdp-title text-[15px] text-ink leading-relaxed">
+                <strong className="underline">The Pink Agenda</strong> raises money for breast cancer research
+                and builds awareness of the disease among young professionals.
+              </li>
+            </ul>
+          </div>
+        </FadeIn>
+      </section>
+
+      {/* Section 6: The Atelier — full-width banner with all text overlaid */}
+      <section className="font-pdp-title">
+        <div className="relative w-full min-h-[72vh] overflow-hidden">
+          <Image
+            src="/images/our-world/atelier-banner.png"
+            alt="The Atelier"
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
+          />
+          <div className="absolute inset-0 bg-charcoal/50" />
+          <div className="absolute inset-0 flex flex-col items-center justify-between px-6 lg:px-20 py-16 lg:py-24">
+            <div className="flex flex-col items-center w-full">
+            <span className="font-pdp-title text-[14px] lg:text-[16px] font-medium tracking-[0.14em] uppercase text-white">
+              The Atelier
+            </span>
+            <div className="mt-12 lg:mt-16 w-full max-w-[1440px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+              <FadeIn delay={0.05}>
+                <div>
+                  <span className="font-pdp-title text-[12px] text-white/80 tracking-wide">01</span>
+                  <h3 className="font-pdp-title text-[20px] lg:text-[24px] font-light text-white mt-2">
+                    Material Research
+                  </h3>
+                  <p className="font-pdp-title text-[14px] lg:text-[15px] text-white/90 mt-4 leading-[1.7]">
+                    We begin with fabric. Every season, our textile engineers test dozens of new fiber combinations
+                    — seeking the perfect balance of stretch, recovery, breathability, and that unmistakable
+                    &ldquo;barely there&rdquo; hand feel.
+                  </p>
+                </div>
               </FadeIn>
 
               <FadeIn delay={0.1}>
-                <p className="font-body text-[15px] text-taupe mt-6 leading-[1.8]">
-                  Every NEIWAI garment begins in our atelier, where textile 
-                  engineers and pattern makers work side by side. The Barely Zero fabric 
-                  took two years of development — testing hundreds of nylon-spandex blends 
-                  to find the one that delivers four-way stretch, moisture management, and 
-                  that signature &ldquo;nothing there&rdquo; feeling.
-                </p>
+                <div>
+                  <span className="font-pdp-title text-[12px] text-white/80 tracking-wide">02</span>
+                  <h3 className="font-pdp-title text-[20px] lg:text-[24px] font-light text-white mt-2">
+                    Pattern Engineering
+                  </h3>
+                  <p className="font-pdp-title text-[14px] lg:text-[15px] text-white/90 mt-4 leading-[1.7]">
+                    Traditional pattern making meets computational design. Each silhouette is refined across hundreds
+                    of iterations, eliminating every unnecessary seam and optimizing for invisible comfort.
+                  </p>
+                </div>
               </FadeIn>
 
               <FadeIn delay={0.15}>
-                <p className="font-body text-[15px] text-taupe mt-4 leading-[1.8]">
-                  Every piece begins with the question: can you feel nothing at all?
-                </p>
+                <div>
+                  <span className="font-pdp-title text-[12px] text-white/80 tracking-wide">03</span>
+                  <h3 className="font-pdp-title text-[20px] lg:text-[24px] font-light text-white mt-2">
+                    Fit Testing
+                  </h3>
+                  <p className="font-pdp-title text-[14px] lg:text-[15px] text-white/90 mt-4 leading-[1.7]">
+                    Every garment is tested on 30+ body types across our full size range. We adjust, retest, and
+                    refine until the fit disappears — until the wearer forgets they&apos;re wearing anything at all.
+                  </p>
+                </div>
               </FadeIn>
 
               <FadeIn delay={0.2}>
-                <div className="mt-8">
-                  <TextLink href="/our-world/atelier">Visit the Atelier</TextLink>
+                <div>
+                  <span className="font-pdp-title text-[12px] text-white/80 tracking-wide">04</span>
+                  <h3 className="font-pdp-title text-[20px] lg:text-[24px] font-light text-white mt-2">
+                    Quality Assurance
+                  </h3>
+                  <p className="font-pdp-title text-[14px] lg:text-[15px] text-white/90 mt-4 leading-[1.7]">
+                    Before a single piece reaches you, it passes through 12 quality checkpoints. We test for
+                    colorfastness, fabric integrity, seam strength, and the subjective measure that matters most:
+                    how does it feel?
+                  </p>
                 </div>
               </FadeIn>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 4: Sustainability */}
-      <section className="py-24 lg:py-40 px-6 lg:px-20 max-w-[1440px] mx-auto">
-        <div className="max-w-[720px] mx-auto">
-          <FadeIn>
-            <Overline>Considered Practices</Overline>
-            <h2 className="font-display text-[28px] lg:text-[36px] font-light text-ink mt-4">
-              Made with intention
-            </h2>
-          </FadeIn>
-
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <FadeIn delay={0.1}>
-              <div>
-                <h3 className="font-body text-[13px] font-medium tracking-wide text-ink mb-3">
-                  Materials
-                </h3>
-                <p className="font-body text-[14px] text-taupe leading-relaxed">
-                  Responsibly sourced fabrics with OEKO-TEX certification. 
-                  Our Barely Zero fabric uses recycled nylon in select colorways.
-                </p>
-              </div>
-            </FadeIn>
-
-            <FadeIn delay={0.15}>
-              <div>
-                <h3 className="font-body text-[13px] font-medium tracking-wide text-ink mb-3">
-                  Manufacturing
-                </h3>
-                <p className="font-body text-[14px] text-taupe leading-relaxed">
-                  Partner factories audited annually for fair labor practices. 
-                  Zero-waste cutting patterns reduce textile waste by 15%.
-                </p>
-              </div>
-            </FadeIn>
-
-            <FadeIn delay={0.2}>
-              <div>
-                <h3 className="font-body text-[13px] font-medium tracking-wide text-ink mb-3">
-                  Packaging
-                </h3>
-                <p className="font-body text-[14px] text-taupe leading-relaxed">
-                  FSC-certified packaging. Plastic-free shipping materials. 
-                  Compostable garment bags made from cornstarch.
-                </p>
-              </div>
-            </FadeIn>
+            </div>
+            <blockquote className="font-pdp-title text-[14px] lg:text-[15px] font-light text-white/90 italic max-w-[640px] mx-auto text-center leading-[1.35] pb-6 lg:pb-8">
+              &ldquo;Every piece begins with the question: can you feel nothing at all?&rdquo;
+            </blockquote>
           </div>
         </div>
       </section>

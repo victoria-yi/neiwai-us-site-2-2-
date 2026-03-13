@@ -742,7 +742,7 @@ export const brasProducts: Product[] = [
         number: '01',
         headline: 'Silk-Touch Fabric',
         description: 'Outer layer: classic CloudFit fabric. Inner layer: real silk — a naturally cool, airy construction designed for warm weather wear and sensitive skin.',
-        image: '/images/Barely Zero Breeze Bra/改褶皱.jpg',
+        image: '/images/Barely Zero Breeze Bra/10.png',
         icon: 'breathe',
       },
       {

@@ -96,6 +96,9 @@
   .font-body {
     font-family: var(--font-body);
   }
+  .font-pdp-title {
+    font-family: Optima, "Optima Nova", "Lucida Grande", sans-serif;
+  }
   .overline {
     font-family: var(--font-body);
     font-size: 11px;

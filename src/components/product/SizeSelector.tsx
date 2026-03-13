@@ -24,7 +24,7 @@ export default function SizeSelector({
             key={size}
             onClick={() => !isOutOfStock && onSelect(size)}
             disabled={isOutOfStock}
-            className={`min-w-[40px] h-9 px-4 font-body text-[13px] rounded-[4px] transition-all duration-300
+            className={`min-w-[40px] h-9 px-4 font-body text-[13px] rounded-none transition-all duration-300
               ${
                 isActive
                   ? 'bg-charcoal text-cream'

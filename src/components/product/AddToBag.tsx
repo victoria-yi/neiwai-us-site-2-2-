@@ -1,66 +1,83 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback, useImperativeHandle, forwardRef } from 'react';
 import { motion } from 'framer-motion';
+
+export interface AddToBagHandle {
+  triggerAdd: () => Promise<void>;
+}
 
 interface AddToBagProps {
   disabled?: boolean;
   onAdd?: () => void;
+  onNoSizeClick?: () => void;
   compact?: boolean;
 }
 
-export default function AddToBag({ disabled = false, onAdd, compact = false }: AddToBagProps) {
+const AddToBag = forwardRef<AddToBagHandle, AddToBagProps>(function AddToBag(
+  { disabled = false, onAdd, onNoSizeClick, compact = false },
+  ref
+) {
   const [state, setState] = useState<'idle' | 'loading' | 'success'>('idle');
 
-  const handleClick = async () => {
-    if (disabled || state !== 'idle') return;
-    
+  const handleClick = useCallback(async () => {
+    if (state !== 'idle') return;
+    if (disabled) {
+      onNoSizeClick?.();
+      return;
+    }
+
     setState('loading');
-    
-    // Simulate API call
+
     await new Promise((resolve) => setTimeout(resolve, 800));
-    
+
     setState('success');
     onAdd?.();
-    
+
     setTimeout(() => {
       setState('idle');
     }, 1500);
-  };
+  }, [disabled, state, onAdd, onNoSizeClick]);
 
+  useImperativeHandle(ref, () => ({
+    triggerAdd: handleClick,
+  }), [handleClick]);
+
+  const compactDisabled = state !== 'idle' || (disabled && !onNoSizeClick);
   if (compact) {
     return (
       <motion.button
         onClick={handleClick}
-        disabled={disabled || state !== 'idle'}
-        className={`w-full h-10 font-body text-[13px] tracking-wide transition-all duration-300 ${
-          disabled
+        disabled={compactDisabled}
+        className={`w-full h-10 font-body text-[14px] tracking-wide transition-all duration-300 rounded-none ${
+          compactDisabled
             ? 'bg-stone text-ink cursor-not-allowed'
             : state === 'success'
             ? 'bg-accent text-cream'
-            : 'bg-charcoal text-cream hover:bg-ink'
+            : 'bg-black text-white hover:opacity-90'
         }`}
-        whileTap={!disabled ? { scale: 0.98 } : {}}
+        whileTap={!compactDisabled ? { scale: 0.98 } : {}}
       >
         {state === 'loading' && 'Adding...'}
         {state === 'success' && 'Added ✓'}
-        {state === 'idle' && (disabled ? 'Select Size' : 'Add to Bag')}
+        {state === 'idle' && 'Add to cart'}
       </motion.button>
     );
   }
 
+  const pdpDisabled = state !== 'idle' || (disabled && !onNoSizeClick);
   return (
     <motion.button
       onClick={handleClick}
-      disabled={disabled || state !== 'idle'}
-      className={`w-full max-w-[320px] h-[46px] font-body text-[13px] tracking-[0.06em] transition-all duration-300 border ${
-        disabled
+      disabled={pdpDisabled}
+      className={`w-full h-[46px] font-body text-[15px] tracking-[0.06em] transition-all duration-300 border ${
+        pdpDisabled
           ? 'bg-stone text-ink border-stone cursor-not-allowed'
           : state === 'success'
           ? 'bg-accent text-cream border-accent'
-          : 'bg-charcoal text-cream border-charcoal hover:bg-ink hover:border-ink'
+          : 'bg-[#E5E5E5] text-ink border-[#E5E5E5] hover:opacity-90'
       }`}
-      whileTap={!disabled ? { scale: 0.98 } : {}}
+      whileTap={!pdpDisabled ? { scale: 0.98 } : {}}
     >
       {state === 'loading' && (
         <motion.span
@@ -71,7 +88,9 @@ export default function AddToBag({ disabled = false, onAdd, compact = false }: A
         </motion.span>
       )}
       {state === 'success' && 'Added ✓'}
-      {state === 'idle' && (disabled ? 'Select a Size' : 'Add to Bag')}
+      {state === 'idle' && 'Add to cart'}
     </motion.button>
   );
-}
+});
+
+export default AddToBag;

@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import ProductGallery from '@/components/product/ProductGallery';
 import SizeSelector from '@/components/product/SizeSelector';
 import ColorSwatches from '@/components/product/ColorSwatches';
-import AddToBag from '@/components/product/AddToBag';
+import AddToBag, { type AddToBagHandle } from '@/components/product/AddToBag';
 import ProductAccordion from '@/components/product/ProductAccordion';
 import TechnologyStory from '@/components/product/TechnologyStory';
 import FloatingCartBar from '@/components/product/FloatingCartBar';
@@ -24,6 +24,9 @@ export default function LeggingsProductPage() {
 
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [showSizeValidation, setShowSizeValidation] = useState(false);
+  const addToBagRef = useRef<AddToBagHandle>(null);
+  const sizeSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (product && product.sizes.length === 1) {
@@ -96,7 +99,7 @@ export default function LeggingsProductPage() {
             <FadeIn>
               <Overline>Barely Zero</Overline>
 
-              <h1 className="font-display text-[24px] lg:text-[28px] font-light text-ink mt-3">
+              <h1 className="font-pdp-title text-[22px] lg:text-[26px] font-light text-ink mt-3">
                 {product.name}
               </h1>
 
@@ -151,10 +154,13 @@ export default function LeggingsProductPage() {
               </div>
             </FadeIn>
 
-            {/* Size Selection */}
+            {/* Size Selection — outline + message when add/buy clicked without size (Alo-style) */}
             {product.sizes.length > 1 && (
               <FadeIn delay={0.15}>
-                <div className="mt-5">
+                <div
+                  ref={sizeSectionRef}
+                  className={`mt-5 rounded ${showSizeValidation ? 'ring-1 ring-ink outline-none' : ''}`}
+                >
                   <div className="flex items-center justify-between mb-3">
                     <span className="font-body text-[13px] text-ink">Size</span>
                     <button className="font-body text-[12px] text-accent hover:underline">
@@ -164,8 +170,14 @@ export default function LeggingsProductPage() {
                   <SizeSelector
                     sizes={product.sizes}
                     selectedSize={selectedSize}
-                    onSelect={setSelectedSize}
+                    onSelect={(size) => {
+                      setSelectedSize(size);
+                      setShowSizeValidation(false);
+                    }}
                   />
+                  {showSizeValidation && (
+                    <p className="font-body text-[12px] text-ink mt-2">Please select a size.</p>
+                  )}
                 </div>
               </FadeIn>
             )}
@@ -180,8 +192,31 @@ export default function LeggingsProductPage() {
             )}
 
             <FadeIn delay={0.2}>
-              <div className="mt-7 hidden lg:block" id="pdp-form-sentinel">
-                <AddToBag disabled={!selectedSize} />
+              <div className="mt-7 hidden lg:flex flex-row gap-3 w-full" id="pdp-form-sentinel">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!selectedSize) {
+                      setShowSizeValidation(true);
+                      sizeSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      return;
+                    }
+                    addToBagRef.current?.triggerAdd();
+                  }}
+                  className="flex-1 h-[46px] font-body text-[15px] tracking-[0.06em] bg-ink text-white border border-ink hover:opacity-90 transition-all duration-300 shrink-0 min-w-0"
+                >
+                  Buy now
+                </button>
+                <div className="flex-1 min-w-0">
+                  <AddToBag
+                    ref={addToBagRef}
+                    disabled={!selectedSize}
+                    onNoSizeClick={() => {
+                      setShowSizeValidation(true);
+                      sizeSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }}
+                  />
+                </div>
               </div>
             </FadeIn>
 
@@ -204,6 +239,12 @@ export default function LeggingsProductPage() {
         product={product}
         selectedColor={selectedColor}
         selectedSize={selectedSize}
+        onColorSelect={setSelectedColor}
+        onSizeSelect={setSelectedSize}
+        onNoSizeClick={() => {
+          setShowSizeValidation(true);
+          sizeSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }}
       />
 
       {/* Technology Story */}
