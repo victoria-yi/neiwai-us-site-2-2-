@@ -94,12 +94,12 @@ export default function OurWorldPage() {
             </p>
             <ul className="mt-8 space-y-6 text-center">
               <li className="font-pdp-title text-[15px] text-ink leading-relaxed">
-                <strong className="underline">I Support the Girls</strong> collects and distributes bras,
+                <span className="underline">I Support the Girls</span> collects and distributes bras,
                 menstrual hygiene products, and other essentials to women experiencing homelessness or distress.
                 Our NYC Store is a bra and menstrual hygiene product donation site for ISTG!
               </li>
               <li className="font-pdp-title text-[15px] text-ink leading-relaxed">
-                <strong className="underline">The Pink Agenda</strong> raises money for breast cancer research
+                <span className="underline">The Pink Agenda</span> raises money for breast cancer research
                 and builds awareness of the disease among young professionals.
               </li>
             </ul>
