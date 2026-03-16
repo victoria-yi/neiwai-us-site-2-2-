@@ -94,25 +94,17 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                     <div key={item.num} className="flex gap-6 items-baseline">
                       {/* Left: 01 Bras — same size as right column, baseline-aligned with first link */}
                       <div className="w-[22%] max-w-[88px] shrink-0">
-                        {'href' in item ? (
-                          <Link
-                            href={item.href!}
-                            onClick={onClose}
-                            className={`font-body text-[12px] font-medium tracking-wide hover:opacity-80 transition-colors whitespace-nowrap ${
-                              item.isSale ? '' : 'text-ink'
-                            }`}
-                          >
-                            <span className="text-taupe">{item.num}</span>
-                            <span className="text-taupe"> | </span>
-                            <span className={item.isSale ? 'text-[#C25835]' : 'text-ink'}>{item.label}</span>
-                          </Link>
-                        ) : (
-                          <span className="font-body text-[12px] font-medium tracking-wide text-ink whitespace-nowrap">
-                            <span className="text-taupe">{item.num}</span>
-                            <span className="text-taupe"> | </span>
-                            <span>{item.label}</span>
-                          </span>
-                        )}
+                        <Link
+                          href={item.href}
+                          onClick={onClose}
+                          className={`font-body text-[12px] font-medium tracking-wide hover:opacity-80 transition-colors whitespace-nowrap ${
+                            'isSale' in item && item.isSale ? '' : 'text-ink'
+                          }`}
+                        >
+                          <span className="text-taupe">{item.num}</span>
+                          <span className="text-taupe"> | </span>
+                          <span className={'isSale' in item && item.isSale ? 'text-[#C25835]' : 'text-ink'}>{item.label}</span>
+                        </Link>
                       </div>
                       {/* Right: sub-links — Bras: insert "Shop by need" (same weight as Bras) + extra spacing */}
                       <ul className="flex-1 min-w-0 space-y-2">
