@@ -111,7 +111,7 @@ export default function FeaturedBras() {
                 )}
               </div>
               <div className="pt-5 pb-5 border-b border-sand flex flex-col">
-                <p className="font-body text-[10px] font-semibold tracking-[0.1em] uppercase text-[#6E655D] lg:text-ink">
+                <p className="font-body text-[10px] font-semibold tracking-[0.1em] uppercase text-taupe lg:text-ink">
                   {product.overline}
                 </p>
                 <h3 className="font-display text-[22px] font-light text-ink mt-2 leading-[1.2] whitespace-pre-line">

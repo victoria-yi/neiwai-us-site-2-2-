@@ -103,7 +103,7 @@ export default function BestSellers() {
 
                 {/* Info */}
                 <div className="mt-5 pb-6 border-b border-sand">
-                  <p className="font-body text-[12px] font-semibold tracking-[0.1em] uppercase text-[#6E655D] lg:text-ink">{product.overline}</p>
+                  <p className="font-body text-[12px] font-semibold tracking-[0.1em] uppercase text-taupe lg:text-ink">{product.overline}</p>
                   <h3 className="font-display text-[22px] lg:text-[24px] font-light text-ink mt-2 leading-[1.2] whitespace-pre-line">
                     {product.name}
                   </h3>

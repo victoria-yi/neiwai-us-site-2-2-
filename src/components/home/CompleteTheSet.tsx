@@ -70,7 +70,7 @@ export default function CompleteTheSet() {
 
               {/* Info below image */}
               <div className="pt-5 pb-2 border-b border-stone/30">
-                <p className="font-body text-[11px] sm:text-[12px] font-semibold tracking-[0.1em] uppercase text-[#6E655D] lg:text-ink">{item.overline}</p>
+                <p className="font-body text-[11px] sm:text-[12px] font-semibold tracking-[0.1em] uppercase text-taupe lg:text-ink">{item.overline}</p>
                 <h3 className="font-display text-[18px] sm:text-[22px] lg:text-[26px] font-light text-ink mt-2 leading-[1.2] min-h-[2.5em] sm:min-h-0">
                   {item.name}
                 </h3>
