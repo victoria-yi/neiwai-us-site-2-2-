@@ -66,7 +66,7 @@ export default function HeroSection({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-          className="mt-5 font-body text-[15px] lg:text-[17px] text-cream/80 tracking-wide lg:whitespace-nowrap"
+          className="mt-5 font-body text-[14px] lg:text-[17px] text-cream/80 tracking-wide lg:whitespace-nowrap"
         >
           {subheadline}
         </motion.p>

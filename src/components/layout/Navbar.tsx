@@ -67,12 +67,16 @@ export default function Navbar() {
   };
 
   const isHome = pathname === '/';
+  const isCollectionWithDarkHero =
+    pathname.startsWith('/bras') || pathname.startsWith('/briefs') || pathname.startsWith('/leggings');
+  const isOverDarkBackground = isHome || isCollectionWithDarkHero;
 
   const navBg = scrolled || hoveredMenu
     ? 'bg-cream/95 backdrop-blur-md border-b border-sand/50'
     : 'bg-transparent';
 
-  const textColor = scrolled || hoveredMenu || !isHome ? 'text-ink' : 'text-cream';
+  const textColor = scrolled || hoveredMenu || !isOverDarkBackground ? 'text-ink' : 'text-cream';
+  const useWhiteLogo = !scrolled && !hoveredMenu && isOverDarkBackground;
 
   return (
     <>
@@ -154,7 +158,7 @@ export default function Navbar() {
             className="absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0 lg:flex-1 lg:flex lg:justify-center"
           >
             <Image
-              src="/images/logo.png"
+              src={useWhiteLogo ? '/images/白logo.png' : '/images/logo.png'}
               alt="NEIWAI"
               width={100}
               height={28}

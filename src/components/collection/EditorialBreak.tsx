@@ -16,11 +16,14 @@ export default function EditorialBreak({
   return (
     <div className="col-span-full py-16 lg:py-24">
       <FadeIn>
-        <div
-          className="py-16 lg:py-24 px-8 text-center"
-          style={{ background: gradient }}
-        >
-          <blockquote className="font-display text-[24px] lg:text-[32px] font-light text-ink italic max-w-[600px] mx-auto leading-[1.35]">
+        <div className="py-16 lg:py-24 px-8 text-center relative">
+          <div
+            className="absolute inset-0 opacity-[0.35] lg:opacity-100 transition-opacity"
+            style={{ background: gradient }}
+            aria-hidden
+          />
+          <div className="relative z-10">
+          <blockquote className="font-display text-[22px] lg:text-[32px] font-light text-ink italic max-w-[600px] mx-auto leading-[1.35]">
             {quote}
           </blockquote>
           {attribution && (
@@ -28,6 +31,7 @@ export default function EditorialBreak({
               — {attribution}
             </p>
           )}
+          </div>
         </div>
       </FadeIn>
     </div>

@@ -47,7 +47,7 @@ export default function BestSellers() {
       <FadeIn>
         <div className="px-6 lg:px-20 max-w-[1440px] mx-auto flex items-baseline justify-between mb-12 lg:mb-16">
           <div>
-            <h2 className="font-display text-[32px] lg:text-[40px] font-light text-ink leading-tight">
+            <h2 className="font-display text-[28px] lg:text-[40px] font-light text-ink leading-tight">
               Briefs &amp; Leggings
             </h2>
             <p className="font-body text-[13px] text-taupe mt-1.5">Everything you need. Nothing you don&apos;t.</p>
@@ -103,12 +103,12 @@ export default function BestSellers() {
 
                 {/* Info */}
                 <div className="mt-5 pb-6 border-b border-sand">
-                  <p className="font-body text-[12px] font-semibold tracking-[0.1em] uppercase text-ink">{product.overline}</p>
+                  <p className="font-body text-[12px] font-semibold tracking-[0.1em] uppercase text-[#6E655D] lg:text-ink">{product.overline}</p>
                   <h3 className="font-display text-[22px] lg:text-[24px] font-light text-ink mt-2 leading-[1.2] whitespace-pre-line">
                     {product.name}
                   </h3>
                   <p className="font-body text-[13px] text-taupe mt-2">{product.tagline}</p>
-                  <p className="font-body text-[15px] text-ink mt-3">{product.price}</p>
+                  <p className="font-body text-[16px] lg:text-[15px] text-ink mt-3">{product.price}</p>
                 </div>
               </Link>
             </FadeIn>

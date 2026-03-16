@@ -60,16 +60,16 @@ export default function FeaturedBras() {
       <FadeIn>
         <div className="px-6 lg:px-20 max-w-[1440px] mx-auto flex items-end justify-between mb-10 lg:mb-14">
           <div>
-            <h2 className="font-display text-[32px] lg:text-[40px] font-light text-ink leading-tight">
+            <h2 className="font-display text-[28px] lg:text-[40px] font-light text-ink leading-tight">
               Featured
             </h2>
-            <p className="font-body text-[13px] text-taupe mt-1.5">
+            <p className="font-body text-[12px] lg:text-[13px] text-taupe mt-1.5">
               The bras that started it all.
             </p>
           </div>
           <Link
             href="/bras"
-            className="font-body text-[11px] tracking-[0.14em] uppercase text-ink hover:text-accent transition-colors duration-300 flex items-center gap-1.5 group"
+            className="font-body text-[10px] lg:text-[11px] tracking-[0.14em] uppercase text-ink hover:text-accent transition-colors duration-300 flex items-center gap-1.5 group"
           >
             All Bras
             <span className="transition-transform duration-300 group-hover:translate-x-1">
@@ -110,19 +110,19 @@ export default function FeaturedBras() {
                   </div>
                 )}
               </div>
-              <div className="pt-5 pb-5 border-b border-sand">
-                <p className="font-body text-[12px] font-semibold tracking-[0.1em] uppercase text-ink">
+              <div className="pt-5 pb-5 border-b border-sand flex flex-col">
+                <p className="font-body text-[10px] font-semibold tracking-[0.1em] uppercase text-[#6E655D] lg:text-ink">
                   {product.overline}
                 </p>
                 <h3 className="font-display text-[22px] font-light text-ink mt-2 leading-[1.2] whitespace-pre-line">
                   {product.name}
                 </h3>
-                <p className="font-body text-[13px] text-taupe mt-2">
+                <p className="font-body text-[11px] text-taupe mt-2 pr-6 flex-1 min-h-[5.5em]">
                   {product.description}
                 </p>
-                <div className="flex items-center justify-between mt-3">
-                  <p className="font-body text-[15px] text-ink">{product.price}</p>
-                  <span className="font-body text-[11px] tracking-[0.12em] uppercase text-taupe group-hover:text-accent transition-colors duration-300 flex items-center gap-1">
+                <div className="flex items-center justify-between mt-3 shrink-0">
+                  <p className="font-body text-[16px] text-ink">{product.price}</p>
+                  <span className="font-body text-[10px] tracking-[0.12em] uppercase text-taupe group-hover:text-accent transition-colors duration-300 flex items-center gap-1 mr-[10px]">
                     Shop
                     <span className="transition-transform duration-300 group-hover:translate-x-1">
                       →

@@ -39,7 +39,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             className={`object-cover object-top transition-all duration-500 ${
               showHoverImage ? 'opacity-0 scale-[1.02]' : 'opacity-100 scale-100'
             } group-hover:scale-[1.03]`}
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes="(max-width: 768px) 50vw, 50vw"
           />
           {/* Hover image */}
           {product.hoverImage && (
@@ -50,14 +50,14 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
               className={`object-cover object-top transition-all duration-500 ${
                 showHoverImage ? 'opacity-100 scale-100' : 'opacity-0 scale-[1.02]'
               }`}
-              sizes="(max-width: 768px) 100vw, 50vw"
+              sizes="(max-width: 768px) 50vw, 50vw"
             />
           )}
         </div>
 
         {/* Info */}
         <div className="mt-4">
-          <h3 className="font-body text-[14px] font-medium text-ink leading-snug">
+          <h3 className="font-body text-[14px] font-normal md:font-medium text-ink leading-snug">
             {product.name}
           </h3>
 
@@ -75,8 +75,8 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             </div>
           )}
 
-          {/* Price — hidden by default, revealed on hover */}
-          <p className="font-body text-[14px] text-ink mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          {/* Price — always visible on mobile, revealed on hover on desktop */}
+          <p className="font-body text-[14px] md:text-[12px] text-ink mt-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
             {formatPrice(product.price)}
           </p>
         </div>

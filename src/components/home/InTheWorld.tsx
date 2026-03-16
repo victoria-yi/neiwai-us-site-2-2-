@@ -13,45 +13,45 @@ export default function InTheWorld() {
       // Two models together, full body, BZ bras + lounge pants
       src: 'https://neiwai.life/cdn/shop/files/2025-08-28NEIWAI16364_2087098d-adca-42e7-89da-ef4c3e9f3af5.jpg?v=1762149203&width=600',
       alt: 'NEIWAI Barely Zero editorial',
-      aspect: 'aspect-[3/4]',
+      aspect: 'aspect-square md:aspect-[3/4]',
     },
     {
       // Model in classic cozy pajama set, full body lifestyle
       src: 'https://neiwai.life/cdn/shop/files/20230408-NEIWAI7738.jpg?v=1694803212&width=600',
       alt: 'NEIWAI loungewear lifestyle',
-      aspect: 'aspect-[1/1]',
+      aspect: 'aspect-square md:aspect-[1/1]',
     },
     {
       // Model in silk pajama set, full body editorial
       src: 'https://neiwai.life/cdn/shop/files/20230408-NEIWAI5607.jpg?v=1688583183&width=600',
       alt: 'NEIWAI silk pajama editorial',
-      aspect: 'aspect-[4/5]',
+      aspect: 'aspect-square md:aspect-[4/5]',
     },
     {
       // Model in Barely Zero Wisp Bra, full body pose
       src: 'https://neiwai.life/cdn/shop/files/2025-08-28NEIWAI167441.jpg?v=1762145917&width=600',
       alt: 'Barely Zero Wisp Bra editorial',
-      aspect: 'aspect-[3/4]',
+      aspect: 'aspect-square md:aspect-[3/4]',
     },
     {
       // Cocoon jacket / cardigan, full body lifestyle
       src: 'https://neiwai.life/cdn/shop/files/Copyof20240531_65576-min_9ceae961-9c14-4def-b14a-858a29288c46.jpg?v=1728005978&width=600',
       alt: 'NEIWAI cashmere cardigan lifestyle',
-      aspect: 'aspect-[1/1]',
+      aspect: 'aspect-square md:aspect-[1/1]',
     },
     {
       // Scallop bra, full body editorial with model
       src: 'https://neiwai.life/cdn/shop/files/2025-08-28NEIWAI158792.jpg?v=1764127456&width=600',
       alt: 'NEIWAI Barely Zero Scallop editorial',
-      aspect: 'aspect-[4/5]',
+      aspect: 'aspect-square md:aspect-[4/5]',
     },
   ];
 
   return (
     <section className="py-24 lg:py-40 px-6 lg:px-20 max-w-[1440px] mx-auto">
       <FadeIn>
-        <div className="text-center mb-16">
-          <Overline>In the World</Overline>
+        <div className="text-center mb-11 lg:mb-16">
+          <Overline className="text-[14px] md:text-[11px]">In the World</Overline>
           <p className="font-body text-[13px] text-taupe mt-3">
             Worn in life. Captured without filter.
           </p>

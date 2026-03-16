@@ -68,7 +68,7 @@ export default function CollectionHero({
             </p>
           )}
           {description && (
-            <p className={`font-body text-[14px] ${image ? 'text-cream/60' : textDesc} mt-4 max-w-[480px] leading-relaxed`}>
+            <p className={`font-body text-[12px] lg:text-[14px] ${image ? 'text-cream/60' : textDesc} mt-4 max-w-[480px] leading-relaxed pr-6 lg:pr-0`}>
               {description}
             </p>
           )}

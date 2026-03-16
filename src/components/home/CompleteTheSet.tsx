@@ -35,7 +35,7 @@ export default function CompleteTheSet() {
       <FadeIn>
         <div className="px-6 lg:px-20 max-w-[1440px] mx-auto flex items-end justify-between mb-10 lg:mb-14">
           <div>
-            <h2 className="font-display text-[32px] lg:text-[40px] font-light text-ink leading-tight">
+            <h2 className="font-display text-[28px] lg:text-[40px] font-light text-ink leading-tight">
               Complete the Set
             </h2>
             <p className="font-body text-[14px] text-taupe mt-1.5">
@@ -70,13 +70,13 @@ export default function CompleteTheSet() {
 
               {/* Info below image */}
               <div className="pt-5 pb-2 border-b border-stone/30">
-                <p className="font-body text-[12px] font-semibold tracking-[0.1em] uppercase text-ink">{item.overline}</p>
-                <h3 className="font-display text-[18px] sm:text-[22px] lg:text-[26px] font-light text-ink mt-2 leading-[1.2]">
+                <p className="font-body text-[11px] sm:text-[12px] font-semibold tracking-[0.1em] uppercase text-[#6E655D] lg:text-ink">{item.overline}</p>
+                <h3 className="font-display text-[18px] sm:text-[22px] lg:text-[26px] font-light text-ink mt-2 leading-[1.2] min-h-[2.5em] sm:min-h-0">
                   {item.name}
                 </h3>
                 <p className="font-body text-[13px] text-taupe mt-2 hidden sm:block">{item.tagline}</p>
                 <div className="flex items-center justify-between mt-3">
-                  <p className="font-body text-[14px] lg:text-[15px] text-ink">{item.price}</p>
+                  <p className="font-body text-[16px] lg:text-[15px] text-ink">{item.price}</p>
                   <span className="font-body text-[11px] tracking-[0.12em] uppercase text-taupe group-hover:text-accent transition-colors duration-300 flex items-center gap-1">
                     {item.cta}
                     <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>

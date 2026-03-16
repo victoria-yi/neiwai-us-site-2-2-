@@ -13,9 +13,9 @@ interface MobileNavProps {
 type MenuKey = 'bras' | 'briefs' | 'leggings';
 
 const leftItems = [
-  { num: '01', label: 'Bras', key: 'bras' as MenuKey },
-  { num: '02', label: 'Briefs', key: 'briefs' as MenuKey },
-  { num: '03', label: 'Leggings', key: 'leggings' as MenuKey },
+  { num: '01', label: 'Bras', key: 'bras' as MenuKey, href: '/bras' },
+  { num: '02', label: 'Briefs', key: 'briefs' as MenuKey, href: '/briefs' },
+  { num: '03', label: 'Leggings', key: 'leggings' as MenuKey, href: '/leggings' },
   { num: '04', label: 'Sale', href: '/sale', isSale: true },
 ];
 

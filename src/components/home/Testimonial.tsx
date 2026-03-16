@@ -89,10 +89,10 @@ export default function Testimonial() {
               transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
               className="absolute inset-0 flex flex-col items-center justify-center"
             >
-              <blockquote className="font-display text-[28px] sm:text-[34px] lg:text-[46px] xl:text-[54px] font-light text-ink leading-[1.25] italic">
+              <blockquote className="font-display text-[22px] sm:text-[34px] lg:text-[46px] xl:text-[54px] font-light text-ink leading-[1.35] lg:leading-[1.25] italic px-2 lg:px-0">
                 &ldquo;{review.quote}&rdquo;
               </blockquote>
-              <p className="font-body text-[14px] text-ink mt-8 tracking-wide">
+              <p className="font-body text-[12px] sm:text-[14px] text-ink mt-8 tracking-wide">
                 — {review.name}
                 {review.meta && <span className="text-taupe"> · {review.meta}</span>}
               </p>
