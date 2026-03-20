@@ -839,6 +839,7 @@ export const brasProducts: Product[] = [
     ],
     sizes: ['XS', 'S', 'M', 'L'],
     images: [
+      '/images/bandeau-bra-cover.png',
       '/images/Bandeau Bra/move2.jpg',
       '/images/Bandeau Bra/move1.jpg',
       '/images/Bandeau Bra/move3.jpg',
@@ -954,6 +955,7 @@ export const brasProducts: Product[] = [
     ],
     sizes: ['XS', 'S', 'M', 'L'],
     images: [
+      '/images/featherlight-push-up-cover.png',
       '/images/Featherlight Push Up Bra/7月2NEIWAIOrange23705调色.jpg',
       '/images/Featherlight Push Up Bra/7月2NEIWAIOrange23714调色.jpg',
       '/images/Featherlight Push Up Bra/7月2NEIWAIOrange23651调色.jpg',
