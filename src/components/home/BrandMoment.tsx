@@ -19,7 +19,7 @@ export default function BrandMoment({
         <FadeIn duration={0.8}>
           {variant === 'quote' && (
             <>
-              <blockquote className="font-display text-[24px] sm:text-[36px] lg:text-[44px] font-light text-cream/90 leading-[1.3] tracking-wide italic text-center">
+              <blockquote className="font-display text-[24px] sm:text-[36px] lg:text-[41px] font-light text-cream/90 leading-[1.3] tracking-wide italic text-center">
                 {quote}
               </blockquote>
               {attribution && (

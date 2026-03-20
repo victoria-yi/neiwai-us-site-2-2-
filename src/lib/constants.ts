@@ -120,23 +120,27 @@ export const megaMenuData = {
 } as const;
 
 export const footerLinks = {
-  about: [
-    { label: 'About', href: 'https://neiwai.life/pages/our-story' },
-    { label: 'The Atelier', href: '/our-world/atelier' },
-    { label: 'Journal', href: '/our-world/journal' },
-    { label: 'Careers', href: 'https://neiwai.life/pages/press' },
-  ],
   customerCare: [
     { label: 'Shipping & Returns', href: 'https://neiwai.life/pages/shipping-returns' },
-    { label: 'Size Guide', href: 'https://neiwai.life/pages/size-guide' },
+    { label: 'Terms Of Service', href: 'https://neiwai.life/pages/terms-of-service' },
+    { label: 'FAQs', href: 'https://neiwai.life/pages/faq' },
     { label: 'Contact Us', href: 'https://neiwai.life/pages/contact-us' },
-    { label: 'FAQ', href: 'https://neiwai.life/pages/faq' },
-    { label: 'Archive Sale', href: 'https://neiwai.life/collections/sale-collection' },
   ],
-  follow: [
+  discover: [
+    { label: 'Our Story', href: 'https://neiwai.life/pages/our-story' },
+    { label: 'Press', href: 'https://neiwai.life/pages/press' },
+    { label: 'Stores', href: 'https://neiwai.life/pages/stores' },
+    { label: 'Rewards Program', href: 'https://neiwai.life/pages/rewards' },
+    { label: 'Affiliate Program', href: 'https://neiwai.life/pages/affiliate-program' },
+    { label: 'Reviews', href: 'https://neiwai.life/pages/reviews' },
+    { label: 'Sale', href: 'https://neiwai.life/collections/sale-collection' },
+  ],
+  social: [
+    { label: 'Facebook', href: 'https://www.facebook.com/neiwaiofficial' },
     { label: 'Instagram', href: 'https://www.instagram.com/neiwaiofficial/?hl=en' },
-    { label: 'Pinterest', href: 'https://www.pinterest.ca/neiwaiofficial/' },
+    { label: 'YouTube', href: 'https://www.youtube.com/@neiwaiofficial' },
     { label: 'TikTok', href: 'https://www.tiktok.com/@neiwai.life' },
+    { label: 'Pinterest', href: 'https://www.pinterest.ca/neiwaiofficial/' },
   ],
 } as const;
 

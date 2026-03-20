@@ -44,7 +44,7 @@ export default function Newsletter() {
   };
 
   return (
-    <section className="py-24 lg:py-32 px-6 lg:px-20 bg-sand/30">
+    <section className="py-24 lg:py-32 px-6 lg:px-20 bg-cream">
       <div className="max-w-[800px] mx-auto text-center">
         {/* Press logos — above the email, bigger */}
         <FadeIn>

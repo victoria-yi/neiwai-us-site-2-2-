@@ -60,10 +60,10 @@ export default function FeaturedBras() {
       <FadeIn>
         <div className="px-6 lg:px-20 max-w-[1440px] mx-auto flex items-end justify-between mb-10 lg:mb-14">
           <div>
-            <h2 className="font-display text-[28px] lg:text-[40px] font-light text-ink leading-tight">
+            <h2 className="font-display text-[28px] lg:text-[36px] font-light text-ink leading-tight">
               Featured
             </h2>
-            <p className="font-body text-[12px] lg:text-[13px] text-taupe mt-1.5">
+            <p className="font-body text-[12px] lg:text-[13px] text-taupe mt-[9px]">
               The bras that started it all.
             </p>
           </div>

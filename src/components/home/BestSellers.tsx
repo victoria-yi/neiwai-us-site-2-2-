@@ -45,12 +45,12 @@ export default function BestSellers() {
     <section className="py-20 lg:py-32 bg-cream">
       {/* Header */}
       <FadeIn>
-        <div className="px-6 lg:px-20 max-w-[1440px] mx-auto flex items-baseline justify-between mb-12 lg:mb-16">
+        <div className="px-6 lg:px-20 max-w-[1440px] mx-auto flex items-baseline justify-between mb-12 lg:mb-[57px]">
           <div>
-            <h2 className="font-display text-[28px] lg:text-[40px] font-light text-ink leading-tight">
+            <h2 className="font-display text-[28px] lg:text-[36px] font-light text-ink leading-tight">
               Briefs &amp; Leggings
             </h2>
-            <p className="font-body text-[13px] text-taupe mt-1.5">Everything you need. Nothing you don&apos;t.</p>
+            <p className="font-body text-[13px] text-taupe mt-[9px]">Everything you need. Nothing you don&apos;t.</p>
           </div>
           <div className="hidden lg:flex items-center gap-8">
             <Link
@@ -103,12 +103,14 @@ export default function BestSellers() {
 
                 {/* Info */}
                 <div className="mt-5 pb-6 border-b border-sand">
-                  <p className="font-body text-[12px] font-semibold tracking-[0.1em] uppercase text-taupe lg:text-ink">{product.overline}</p>
-                  <h3 className="font-display text-[22px] lg:text-[24px] font-light text-ink mt-2 leading-[1.2] whitespace-pre-line">
-                    {product.name}
+                  <p className="font-body text-[13px] text-taupe">{product.tagline}</p>
+                  <h3 className="font-display text-[16px] sm:text-[18px] lg:text-[24px] font-light text-ink mt-2 leading-[1.2] whitespace-nowrap overflow-hidden text-ellipsis">
+                    {product.name.replace(/\n/g, ' ')}
                   </h3>
-                  <p className="font-body text-[13px] text-taupe mt-2">{product.tagline}</p>
                   <p className="font-body text-[16px] lg:text-[15px] text-ink mt-3">{product.price}</p>
+                  <span className="font-body text-[12px] text-ink underline mt-2 inline-block group-hover:opacity-80 transition-opacity">
+                    Shop Now
+                  </span>
                 </div>
               </Link>
             </FadeIn>

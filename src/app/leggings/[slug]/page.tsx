@@ -67,10 +67,6 @@ export default function LeggingsProductPage() {
       title: 'Care Instructions',
       content: product.details.care,
     },
-    {
-      title: 'Fit Guide',
-      content: product.details.fit,
-    },
   ];
 
   return (

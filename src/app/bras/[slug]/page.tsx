@@ -119,10 +119,6 @@ export default function BrasProductPage() {
       title: 'Care Instructions',
       content: product.details.care,
     },
-    {
-      title: 'Fit Guide',
-      content: product.details.fit,
-    },
   ];
 
   const handleVariantSelect = (variantId: string) => {

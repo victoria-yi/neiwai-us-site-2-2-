@@ -73,10 +73,6 @@ export default function BriefsProductPage() {
       title: 'Care Instructions',
       content: product.details.care,
     },
-    {
-      title: 'Fit Guide',
-      content: product.details.fit,
-    },
   ];
 
   return (

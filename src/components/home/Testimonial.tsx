@@ -63,15 +63,15 @@ export default function Testimonial() {
   const review = reviews[index];
 
   return (
-    <section className="py-20 lg:py-32 px-6 lg:px-20 bg-cream overflow-hidden">
+    <section className="pt-[5px] pb-[10px] lg:pt-[53px] lg:pb-0 px-6 lg:px-20 bg-cream overflow-hidden">
       <div className="max-w-[900px] mx-auto text-center">
         {/* Section label + counter */}
-        <div className="flex items-center justify-center gap-4 mb-10 lg:mb-14">
-          <p className="font-body text-[16px] sm:text-[18px] lg:text-[20px] font-medium tracking-[0.12em] uppercase text-ink">
+        <div className="flex items-center justify-center gap-4 mb-[50px] lg:mb-[66px]">
+          <p className="font-body text-[12px] sm:text-[14px] lg:text-[16px] font-medium tracking-[0.12em] uppercase text-ink">
             In Their Own Words
           </p>
           <span className="text-stone/40">·</span>
-          <p className="font-body text-[14px] sm:text-[16px] text-stone tabular-nums">
+          <p className="font-body text-[11px] sm:text-[12px] text-stone tabular-nums">
             {String(index + 1).padStart(2, '0')} / {String(reviews.length).padStart(2, '0')}
           </p>
         </div>
@@ -89,10 +89,10 @@ export default function Testimonial() {
               transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
               className="absolute inset-0 flex flex-col items-center justify-center"
             >
-              <blockquote className="font-display text-[22px] sm:text-[34px] lg:text-[46px] xl:text-[54px] font-light text-ink leading-[1.35] lg:leading-[1.25] italic px-2 lg:px-0">
+              <blockquote className="font-display text-[22px] sm:text-[34px] lg:text-[32px] xl:text-[40px] font-light text-ink leading-[1.35] lg:leading-[1.44] italic px-2 lg:px-0">
                 &ldquo;{review.quote}&rdquo;
               </blockquote>
-              <p className="font-body text-[12px] sm:text-[14px] text-ink mt-8 tracking-wide">
+              <p className="font-body text-[12px] sm:text-[14px] text-ink mt-[38px] tracking-wide">
                 — {review.name}
                 {review.meta && <span className="text-taupe"> · {review.meta}</span>}
               </p>
@@ -101,7 +101,7 @@ export default function Testimonial() {
         </div>
 
         {/* Controls — centered */}
-        <div className="flex items-center justify-center gap-6 mt-14 lg:mt-18">
+        <div className="flex items-center justify-center gap-6 mt-[66px] lg:mt-[82px]">
           <button
             onClick={prev}
             aria-label="Previous review"

@@ -1,6 +1,6 @@
 import HeroSection from '@/components/home/HeroSection';
 import FeaturedBras from '@/components/home/FeaturedBras';
-import CompleteTheSet from '@/components/home/CompleteTheSet';
+import EditorialBras from '@/components/home/EditorialBras';
 import BrandMoment from '@/components/home/BrandMoment';
 import BestSellers from '@/components/home/BestSellers';
 import Testimonial from '@/components/home/Testimonial';
@@ -18,8 +18,8 @@ export default function HomePage() {
       {/* 2. Featured Bras — side by side */}
       <FeaturedBras />
 
-      {/* 3. Complete the Set — bra + brief pairing */}
-      <CompleteTheSet />
+      {/* 3. Editorial — Pure Comfort, Bandeau, Featherlight */}
+      <EditorialBras />
 
       {/* 4. Brand Philosophy */}
       <BrandMoment />

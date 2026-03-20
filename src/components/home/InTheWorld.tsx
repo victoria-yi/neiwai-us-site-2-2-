@@ -48,7 +48,7 @@ export default function InTheWorld() {
   ];
 
   return (
-    <section className="py-24 lg:py-40 px-6 lg:px-20 max-w-[1440px] mx-auto">
+    <section className="pt-[76px] pb-24 lg:pt-[140px] lg:pb-40 px-6 lg:px-20 max-w-[1440px] mx-auto">
       <FadeIn>
         <div className="text-center mb-11 lg:mb-16">
           <Overline className="text-[14px] md:text-[11px]">In the World</Overline>
