@@ -30,6 +30,7 @@ export default function LeggingsProductPage() {
   const addToBagRef = useRef<AddToBagHandle>(null);
   const floatingCartBarRef = useRef<FloatingCartBarHandle>(null);
   const sizeSectionRef = useRef<HTMLDivElement>(null);
+  const { addItem } = useCart();
 
   useEffect(() => {
     if (product && product.sizes.length === 1) {
