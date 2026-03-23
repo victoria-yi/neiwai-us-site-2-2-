@@ -71,7 +71,7 @@ export default function JournalPage() {
               <div className="mt-5">
                 <div className="flex items-center gap-3 mb-2">
                   <Overline>{journalEntries[0].category}</Overline>
-                  <span className="font-body text-[11px] text-stone">
+                  <span className="font-body text-[11px] text-prose">
                     {journalEntries[0].date}
                   </span>
                 </div>
@@ -102,7 +102,7 @@ export default function JournalPage() {
                   <div className="mt-4">
                     <div className="flex items-center gap-3 mb-2">
                       <Overline>{entry.category}</Overline>
-                      <span className="font-body text-[11px] text-stone">{entry.date}</span>
+                      <span className="font-body text-[11px] text-prose">{entry.date}</span>
                     </div>
                     <h3 className="font-display text-[20px] font-light text-ink leading-[1.3] group-hover:text-accent transition-colors duration-300">
                       {entry.title}
@@ -132,7 +132,7 @@ export default function JournalPage() {
             <div className="mt-5">
               <div className="flex items-center gap-3 mb-2">
                 <Overline>{journalEntries[3].category}</Overline>
-                <span className="font-body text-[11px] text-stone">{journalEntries[3].date}</span>
+                <span className="font-body text-[11px] text-prose">{journalEntries[3].date}</span>
               </div>
               <h2 className="font-display text-[24px] lg:text-[28px] font-light text-ink leading-[1.25] group-hover:text-accent transition-colors duration-300">
                 {journalEntries[3].title}

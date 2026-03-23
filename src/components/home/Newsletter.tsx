@@ -48,7 +48,7 @@ export default function Newsletter() {
       <div className="max-w-[800px] mx-auto text-center">
         {/* Press logos — above the email, bigger */}
         <FadeIn>
-          <p className="font-body text-[10px] tracking-[0.12em] uppercase text-taupe text-center mb-8">
+          <p className="font-body text-[10px] tracking-[0.12em] uppercase text-prose text-center mb-8">
             Recognized by
           </p>
           <div className="flex items-center justify-center gap-10 lg:gap-16 flex-nowrap mb-16">
@@ -74,7 +74,7 @@ export default function Newsletter() {
           <h2 className="font-display text-[28px] lg:text-[36px] font-light text-ink">
             Join our world
           </h2>
-          <p className="font-body text-[14px] text-taupe mt-4 leading-relaxed">
+          <p className="font-body text-[14px] text-prose mt-4 leading-relaxed">
             Receive seasonal edits, studio notes, and early access.
           </p>
         </FadeIn>
@@ -89,7 +89,7 @@ export default function Newsletter() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email address"
-                className="flex-1 bg-white border border-sand text-ink placeholder:text-stone font-body text-[14px] px-5 py-3 focus:outline-none focus:border-accent transition-colors duration-300"
+                className="flex-1 bg-white border border-sand text-ink placeholder:text-prose font-body text-[14px] px-5 py-3 focus:outline-none focus:border-accent transition-colors duration-300"
                 required
               />
               <button

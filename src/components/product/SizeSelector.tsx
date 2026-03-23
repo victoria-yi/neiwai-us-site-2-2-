@@ -29,7 +29,7 @@ export default function SizeSelector({
                 isActive
                   ? 'bg-charcoal text-cream'
                   : isOutOfStock
-                  ? 'bg-cream text-stone/40 border border-sand line-through cursor-not-allowed'
+                  ? 'bg-cream text-taupe border border-sand line-through cursor-not-allowed'
                   : 'bg-cream text-charcoal border border-charcoal/20 hover:border-charcoal'
               }`}
             aria-label={`Size ${size}${isOutOfStock ? ' - out of stock' : ''}`}

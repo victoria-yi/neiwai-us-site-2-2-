@@ -50,7 +50,7 @@ export default function BestSellers() {
             <h2 className="font-display text-[28px] lg:text-[36px] font-light text-ink leading-tight">
               Briefs &amp; Leggings
             </h2>
-            <p className="font-body text-[13px] text-taupe mt-[9px]">Everything you need. Nothing you don&apos;t.</p>
+            <p className="font-body text-[13px] text-prose mt-[9px]">Everything you need. Nothing you don&apos;t.</p>
           </div>
           <div className="hidden lg:flex items-center gap-8">
             <Link

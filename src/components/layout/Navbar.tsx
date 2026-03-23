@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useCart } from '@/context/CartContext';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence } from 'framer-motion';
@@ -13,7 +14,16 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [hoveredMenu, setHoveredMenu] = useState<'bras' | 'briefs' | 'leggings' | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const pathname = usePathname();
+
+  useEffect(() => {
+    const m = window.matchMedia('(max-width: 1023px)');
+    const handler = () => setIsMobile(m.matches);
+    handler();
+    m.addEventListener('change', handler);
+    return () => m.removeEventListener('change', handler);
+  }, []);
   const closeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -69,14 +79,19 @@ export default function Navbar() {
   const isHome = pathname === '/';
   const isCollectionWithDarkHero =
     pathname.startsWith('/bras') || pathname.startsWith('/briefs') || pathname.startsWith('/leggings');
-  const isOverDarkBackground = isHome || isCollectionWithDarkHero;
+  // PDP pages have light background at top — always use black nav text/logo
+  const isPDP = /^\/(bras|briefs|leggings)\/[^/]+$/.test(pathname);
+  const isCollectionPage = pathname === '/bras' || pathname === '/briefs' || pathname === '/leggings';
+  // Mobile collection: hero is hidden, so always use black nav
+  const isOverDarkBackground = (isHome || isCollectionWithDarkHero) && !isPDP && !(isMobile && isCollectionPage);
 
-  const navBg = scrolled || hoveredMenu
+  const navBg = scrolled || hoveredMenu || isPDP
     ? 'bg-cream/95 backdrop-blur-md border-b border-sand/50'
     : 'bg-transparent';
 
   const textColor = scrolled || hoveredMenu || !isOverDarkBackground ? 'text-ink' : 'text-cream';
   const useWhiteLogo = !scrolled && !hoveredMenu && isOverDarkBackground;
+  const { count, openDrawer } = useCart();
 
   return (
     <>
@@ -119,12 +134,11 @@ export default function Navbar() {
             <Link
               href="/sale"
               onMouseEnter={() => setHoveredMenu(null)}
-              className={`font-body text-[14px] font-normal tracking-wide transition-opacity duration-300 hover:opacity-80 ${
+              className={`font-body text-[14px] font-normal tracking-wide transition-opacity duration-300 hover:opacity-80 text-sale ${
                 pathname === '/sale'
-                  ? 'relative after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[1px] after:bg-[#C25835]'
+                  ? 'relative after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[1px] after:bg-sale'
                   : ''
               }`}
-              style={{ color: '#C25835' }}
             >
               Sale
             </Link>
@@ -191,17 +205,19 @@ export default function Navbar() {
               </svg>
             </button>
 
-            {/* Bag */}
+            {/* Bag — opens cart drawer */}
             <button
+              type="button"
+              onClick={openDrawer}
               className={`relative transition-colors duration-300 hover:text-accent ${textColor}`}
-              aria-label="Shopping bag"
+              aria-label={`Shopping bag${count > 0 ? `, ${count} items` : ''}`}
             >
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <path d="M4 6h12l1 12H3L4 6z" />
                 <path d="M7 6V4a3 3 0 016 0v2" />
               </svg>
               <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-accent text-cream text-[10px] flex items-center justify-center font-body font-medium">
-                0
+                {count}
               </span>
             </button>
           </div>

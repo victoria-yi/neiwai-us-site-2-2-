@@ -9,11 +9,12 @@ import ColorSwatches from '@/components/product/ColorSwatches';
 import AddToBag, { type AddToBagHandle } from '@/components/product/AddToBag';
 import ProductAccordion from '@/components/product/ProductAccordion';
 import TechnologyStory from '@/components/product/TechnologyStory';
-import FloatingCartBar from '@/components/product/FloatingCartBar';
+import FloatingCartBar, { type FloatingCartBarHandle } from '@/components/product/FloatingCartBar';
 import CompleteTheSetPDP from '@/components/product/CompleteTheSetPDP';
 import YouMayAlsoLikePDP from '@/components/product/YouMayAlsoLikePDP';
 import FadeIn from '@/components/ui/FadeIn';
 import Overline from '@/components/ui/Overline';
+import { useCart } from '@/context/CartContext';
 import { getProductBySlug, getMatchingSetBriefs, getYouMayAlsoLikeBras } from '@/lib/products';
 import { formatPrice } from '@/lib/utils';
 
@@ -30,8 +31,11 @@ export default function BriefsProductPage() {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [showSizeValidation, setShowSizeValidation] = useState(false);
+  const [pendingAddAfterSizeSelect, setPendingAddAfterSizeSelect] = useState(false);
   const addToBagRef = useRef<AddToBagHandle>(null);
+  const floatingCartBarRef = useRef<FloatingCartBarHandle>(null);
   const sizeSectionRef = useRef<HTMLDivElement>(null);
+  const { addItem } = useCart();
 
   useEffect(() => {
     if (product && product.sizes.length === 1) {
@@ -44,6 +48,15 @@ export default function BriefsProductPage() {
       setSelectedColor(product.colors[0].name);
     }
   }, [product, selectedColor]);
+
+  useEffect(() => {
+    if (pendingAddAfterSizeSelect && selectedSize) {
+      setPendingAddAfterSizeSelect(false);
+      queueMicrotask(() => {
+        addToBagRef.current?.triggerAdd() ?? floatingCartBarRef.current?.triggerAdd();
+      });
+    }
+  }, [pendingAddAfterSizeSelect, selectedSize]);
 
   if (!product) {
     return (
@@ -111,7 +124,7 @@ export default function BriefsProductPage() {
 
               <div className="mt-5 border border-sand bg-warm-white">
                 <div className="px-5 pt-4 pb-5">
-                  <p className="font-display text-[11px] font-light tracking-[0.16em] uppercase text-taupe/70 mb-3">
+                  <p className="font-display text-[11px] font-light tracking-[0.16em] uppercase text-taupe mb-3">
                     Why You&apos;ll Love It
                   </p>
                   <p className="font-body text-[16px] text-ink leading-snug">
@@ -120,7 +133,7 @@ export default function BriefsProductPage() {
                 </div>
                 {product.technologyFeatures && product.technologyFeatures.length > 0 && (
                   <div className="border-t border-sand px-5 py-4 bg-sand/10">
-                    <p className="font-display text-[11px] font-light tracking-[0.16em] uppercase text-taupe/70 mb-3">
+                    <p className="font-display text-[11px] font-light tracking-[0.16em] uppercase text-taupe mb-3">
                       Highlights
                     </p>
                     <ul className="flex flex-col gap-2">
@@ -200,6 +213,7 @@ export default function BriefsProductPage() {
                   onClick={() => {
                     if (!selectedSize) {
                       setShowSizeValidation(true);
+                      setPendingAddAfterSizeSelect(true);
                       sizeSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                       return;
                     }
@@ -213,8 +227,18 @@ export default function BriefsProductPage() {
                   <AddToBag
                     ref={addToBagRef}
                     disabled={!selectedSize}
+                    onAdd={() => {
+                      if (selectedSize) {
+                        const color = selectedColor ?? product.colors[0]?.name ?? '';
+                        const img = color && product.colorImages?.[color]?.[0]
+                          ? product.colorImages[color][0]
+                          : product.images[0] ?? '';
+                        addItem({ product, color, size: selectedSize, image: img });
+                      }
+                    }}
                     onNoSizeClick={() => {
                       setShowSizeValidation(true);
+                      setPendingAddAfterSizeSelect(true);
                       sizeSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }}
                   />
@@ -238,6 +262,7 @@ export default function BriefsProductPage() {
 
       {/* Floating Cart Bar */}
       <FloatingCartBar
+        ref={floatingCartBarRef}
         product={product}
         selectedColor={selectedColor}
         selectedSize={selectedSize}
@@ -245,6 +270,7 @@ export default function BriefsProductPage() {
         onSizeSelect={setSelectedSize}
         onNoSizeClick={() => {
           setShowSizeValidation(true);
+          setPendingAddAfterSizeSelect(true);
           sizeSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }}
       />

@@ -31,8 +31,10 @@ export default function LeggingsPage() {
   const filteredProducts = useMemo(() => {
     let products = applyFilter(activeFilter);
 
-    if (activeSort === 'Price') {
+    if (activeSort === 'Ascending price') {
       products = [...products].sort((a, b) => a.price - b.price);
+    } else if (activeSort === 'Descending price') {
+      products = [...products].sort((a, b) => b.price - a.price);
     } else if (activeSort === 'New Arrivals') {
       products = [...products].sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
     }
@@ -49,7 +51,8 @@ export default function LeggingsPage() {
         image="https://neiwai.life/cdn/shop/files/20210702NEIWAI0823.jpg?v=1729635212&width=1920"
       />
 
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-8 lg:py-12">
+      <section className="bg-white">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-20 pt-14 pb-8 lg:py-12">
         <FilterBar
           filters={filters}
           activeFilter={activeFilter}
@@ -68,6 +71,7 @@ export default function LeggingsPage() {
           </p>
         </div>
       </div>
+      </section>
     </>
   );
 }

@@ -57,17 +57,17 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
 
         {/* Info */}
         <div className="mt-4">
-          <h3 className="font-body text-[14px] font-normal md:font-medium text-ink leading-snug">
+          <h3 className="font-pdp-title text-[14px] md:text-[16px] font-normal md:font-medium text-ink leading-snug">
             {product.name}
           </h3>
 
-          {/* Color dots */}
+          {/* Color dots — slightly larger */}
           {product.colors.length > 1 && (
-            <div className="flex flex-wrap gap-1.5 mt-2">
+            <div className="flex flex-wrap gap-1.5 md:gap-2 mt-2">
               {product.colors.map((color) => (
                 <span
                   key={color.name}
-                  className="w-3 h-3 rounded-full border border-sand"
+                  className="w-[14px] h-[14px] md:w-[18px] md:h-[18px] rounded-full border border-sand"
                   style={{ backgroundColor: color.hex }}
                   title={color.name}
                 />
@@ -75,8 +75,8 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             </div>
           )}
 
-          {/* Price — always visible on mobile, revealed on hover on desktop */}
-          <p className="font-body text-[14px] md:text-[12px] text-ink mt-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+          {/* Price — always visible, 1 size smaller on mobile */}
+          <p className="font-body text-[14px] md:text-[16px] text-ink mt-2">
             {formatPrice(product.price)}
           </p>
         </div>

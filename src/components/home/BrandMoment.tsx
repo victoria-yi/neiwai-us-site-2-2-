@@ -27,7 +27,7 @@ export default function BrandMoment({
                   — {attribution}
                 </p>
               )}
-              <p className="font-body text-[9px] font-medium tracking-[0.14em] uppercase text-stone/60 mt-10 text-center">
+              <p className="font-body text-[9px] font-medium tracking-[0.14em] uppercase text-stone mt-10 text-center">
                 Brand Philosophy
               </p>
             </>

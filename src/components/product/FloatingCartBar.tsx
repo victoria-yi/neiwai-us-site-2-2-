@@ -1,11 +1,16 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useImperativeHandle, forwardRef, useRef } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import AddToBag from './AddToBag';
+import AddToBag, { type AddToBagHandle } from './AddToBag';
 import type { Product, ProductColor } from '@/lib/products';
 import { formatPrice } from '@/lib/utils';
+import { useCart } from '@/context/CartContext';
+
+export interface FloatingCartBarHandle {
+  triggerAdd: () => Promise<void>;
+}
 
 interface FloatingCartBarProps {
   product: Product;
@@ -17,6 +22,8 @@ interface FloatingCartBarProps {
   onSizeSelect?: (size: string) => void;
   onAddToBag?: () => void;
   onNoSizeClick?: () => void;
+  /** Optional: open cart drawer after successful add */
+  onAddSuccess?: (item: { product: Product; color: string; size: string }) => void;
 }
 
 function getDisplayImage(product: Product, selectedColor: string | null): string {
@@ -38,20 +45,61 @@ function useIsDesktop() {
   return isDesktop;
 }
 
-export default function FloatingCartBar({
-  product,
-  selectedColor,
-  selectedSize,
-  colors: colorsProp,
-  onColorSelect,
-  onSizeSelect,
-  onAddToBag,
-  onNoSizeClick,
-}: FloatingCartBarProps) {
+const FloatingCartBar = forwardRef<FloatingCartBarHandle, FloatingCartBarProps>(function FloatingCartBar(
+  {
+    product,
+    selectedColor,
+    selectedSize,
+    colors: colorsProp,
+    onColorSelect,
+    onSizeSelect,
+    onAddToBag,
+    onNoSizeClick,
+    onAddSuccess,
+  },
+  ref
+) {
   const [visible, setVisible] = useState(false);
   const [addState, setAddState] = useState<'idle' | 'loading' | 'success'>('idle');
+  const addToBagRef = useRef<AddToBagHandle>(null);
   const isDesktop = useIsDesktop();
   const colors = colorsProp ?? product.colors;
+  const { addItem } = useCart();
+
+  const addToCartAndOpenDrawer = () => {
+    if (selectedSize) {
+      const color = selectedColor ?? colors[0]?.name ?? '';
+      const img = color && product.colorImages?.[color]?.[0]
+        ? product.colorImages[color][0]
+        : product.images[0] ?? '';
+      addItem({ product, color, size: selectedSize, image: img });
+      onAddSuccess?.({ product, color, size: selectedSize });
+    }
+  };
+
+  const handleAddToCart = async () => {
+    if (addState !== 'idle') return;
+    if (!selectedSize) {
+      onNoSizeClick?.();
+      return;
+    }
+    setAddState('loading');
+    await new Promise((r) => setTimeout(r, 800));
+    setAddState('success');
+    onAddToBag?.();
+    addToCartAndOpenDrawer();
+    setTimeout(() => setAddState('idle'), 1500);
+  };
+
+  useImperativeHandle(ref, () => ({
+    triggerAdd: async () => {
+      if (isDesktop) {
+        await addToBagRef.current?.triggerAdd();
+      } else {
+        await handleAddToCart();
+      }
+    },
+  }), [isDesktop]);
 
   useEffect(() => {
     if (!isDesktop) {
@@ -71,19 +119,6 @@ export default function FloatingCartBar({
 
   const displayImage = getDisplayImage(product, selectedColor);
   const disabled = !selectedSize;
-
-  const handleAddToCart = async () => {
-    if (addState !== 'idle') return;
-    if (disabled) {
-      onNoSizeClick?.();
-      return;
-    }
-    setAddState('loading');
-    await new Promise((r) => setTimeout(r, 800));
-    setAddState('success');
-    onAddToBag?.();
-    setTimeout(() => setAddState('idle'), 1500);
-  };
 
   const handleBuyNow = async () => {
     if (disabled) {
@@ -169,8 +204,12 @@ export default function FloatingCartBar({
         {/* Add to cart — 190px gap from color/size, pure black button */}
         <div className="ml-[190px] w-full max-w-[200px] shrink-0">
           <AddToBag
+            ref={addToBagRef}
             disabled={disabled}
-            onAdd={onAddToBag}
+            onAdd={() => {
+              onAddToBag?.();
+              addToCartAndOpenDrawer();
+            }}
             onNoSizeClick={onNoSizeClick}
             compact
           />
@@ -201,18 +240,22 @@ export default function FloatingCartBar({
   );
 
   return (
-    <AnimatePresence>
-      {visible && (
-        <motion.div
-          initial={isDesktop ? { y: 100, opacity: 0 } : undefined}
-          animate={{ y: 0, opacity: 1 }}
-          exit={isDesktop ? { y: 100, opacity: 0 } : undefined}
-          transition={{ duration: 0.25 }}
-          className="fixed bottom-0 left-0 right-0 z-40 bg-cream/98 backdrop-blur-md border-t border-sand shadow-[0_-4px 24px rgba(0,0,0,0.06)]"
-        >
-          {barContent}
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <>
+      <AnimatePresence>
+        {visible && (
+          <motion.div
+            initial={isDesktop ? { y: 100, opacity: 0 } : undefined}
+            animate={{ y: 0, opacity: 1 }}
+            exit={isDesktop ? { y: 100, opacity: 0 } : undefined}
+            transition={{ duration: 0.25 }}
+            className="fixed bottom-0 left-0 right-0 z-40 bg-cream/98 backdrop-blur-md border-t border-sand shadow-[0_-4px 24px rgba(0,0,0,0.06)]"
+          >
+            {barContent}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
-}
+});
+
+export default FloatingCartBar;

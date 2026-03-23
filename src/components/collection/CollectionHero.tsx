@@ -28,7 +28,7 @@ export default function CollectionHero({
   const textDesc = textLight ? 'text-cream/60' : 'text-charcoal/50';
 
   return (
-    <section className="relative h-[50vh] lg:h-[60vh] overflow-hidden flex items-end">
+    <section className="hidden md:flex relative h-[50vh] lg:h-[60vh] overflow-hidden items-end">
       {image ? (
         <>
           <Image

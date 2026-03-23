@@ -63,7 +63,7 @@ export default function FeaturedBras() {
             <h2 className="font-display text-[28px] lg:text-[36px] font-light text-ink leading-tight">
               Featured
             </h2>
-            <p className="font-body text-[12px] lg:text-[13px] text-taupe mt-[9px]">
+            <p className="font-body text-[12px] lg:text-[13px] text-prose mt-[9px]">
               The bras that started it all.
             </p>
           </div>
@@ -79,14 +79,15 @@ export default function FeaturedBras() {
         </div>
       </FadeIn>
 
-      {/* Mobile: horizontal snap scroll */}
-      <div
-        ref={scrollRef}
-        onScroll={handleScroll}
-        className="lg:hidden overflow-x-auto snap-x snap-mandatory scrollbar-none px-6"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-      >
-        <div className="flex gap-4" style={{ width: `${products.length * 85}vw` }}>
+      {/* Mobile: horizontal snap scroll — px-6 wrapper matches Beyond Barely Zero product alignment */}
+      <div className="lg:hidden px-6 lg:px-20 max-w-[1440px] mx-auto">
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll}
+          className="overflow-x-auto snap-x snap-mandatory scrollbar-none"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          <div className="flex gap-4" style={{ width: `${products.length * 85}vw` }}>
           {products.map((product) => (
             <Link
               key={product.id}
@@ -132,6 +133,7 @@ export default function FeaturedBras() {
               </div>
             </Link>
           ))}
+          </div>
         </div>
       </div>
 

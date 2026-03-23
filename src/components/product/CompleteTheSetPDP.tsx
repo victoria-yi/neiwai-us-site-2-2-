@@ -52,7 +52,7 @@ export default function CompleteTheSetPDP({ briefs }: CompleteTheSetPDPProps) {
                   </h3>
                   <div className="flex items-center justify-between mt-3">
                     <p className="font-body text-[13px] lg:text-[15px] text-ink">{formatPrice(p.price)}</p>
-                    <span className="font-body text-[9px] lg:text-[11px] tracking-[0.12em] uppercase text-taupe group-hover:text-accent transition-colors duration-300 flex items-center gap-1">
+                    <span className="font-body text-[9px] lg:text-[11px] tracking-[0.12em] uppercase text-taupe lg:text-ink group-hover:text-accent transition-colors duration-300 flex items-center gap-1">
                       Select a size
                       <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                     </span>

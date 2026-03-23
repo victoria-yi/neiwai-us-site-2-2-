@@ -12,10 +12,11 @@ import YouMayAlsoLikePDP from '@/components/product/YouMayAlsoLikePDP';
 import VariantSelector from '@/components/product/VariantSelector';
 import TechnologyStory from '@/components/product/TechnologyStory';
 import VariantComparison from '@/components/product/VariantComparison';
-import FloatingCartBar from '@/components/product/FloatingCartBar';
+import FloatingCartBar, { type FloatingCartBarHandle } from '@/components/product/FloatingCartBar';
 import CompleteTheSetPDP from '@/components/product/CompleteTheSetPDP';
 import FadeIn from '@/components/ui/FadeIn';
 import Overline from '@/components/ui/Overline';
+import { useCart } from '@/context/CartContext';
 import { getProductBySlug, getYouMayAlsoLikeBras, getMatchingSetBriefs } from '@/lib/products';
 import type { Product } from '@/lib/products';
 import { formatPrice } from '@/lib/utils';
@@ -50,8 +51,11 @@ export default function BrasProductPage() {
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null);
   const [showSizeValidation, setShowSizeValidation] = useState(false);
+  const [pendingAddAfterSizeSelect, setPendingAddAfterSizeSelect] = useState(false);
   const addToBagRef = useRef<AddToBagHandle>(null);
+  const floatingCartBarRef = useRef<FloatingCartBarHandle>(null);
   const sizeSectionRef = useRef<HTMLDivElement>(null);
+  const { addItem } = useCart();
 
   const hasVariants = !!(product?.variants && product.variants.length > 0);
 
@@ -87,6 +91,16 @@ export default function BrasProductPage() {
       setSelectedColor(product.colors[0].name);
     }
   }, [product, hasVariants, selectedColor]);
+
+  // Auto-add when user selects size after clicking Add without size
+  useEffect(() => {
+    if (pendingAddAfterSizeSelect && selectedSize) {
+      setPendingAddAfterSizeSelect(false);
+      queueMicrotask(() => {
+        addToBagRef.current?.triggerAdd() ?? floatingCartBarRef.current?.triggerAdd();
+      });
+    }
+  }, [pendingAddAfterSizeSelect, selectedSize]);
 
   if (!product) {
     return (
@@ -162,7 +176,7 @@ export default function BrasProductPage() {
 
               <div className="mt-5 border border-sand bg-warm-white">
                 <div className="px-5 pt-4 pb-5">
-                  <p className="font-display text-[11px] font-light tracking-[0.16em] uppercase text-taupe/70 mb-3">
+                  <p className="font-display text-[11px] font-light tracking-[0.16em] uppercase text-taupe mb-3">
                     Why You&apos;ll Love It
                   </p>
                   <p className="font-body text-[16px] text-ink leading-snug">
@@ -171,7 +185,7 @@ export default function BrasProductPage() {
                 </div>
                 {product.technologyFeatures && product.technologyFeatures.length > 0 && (
                   <div className="border-t border-sand px-5 py-4 bg-sand/10">
-                    <p className="font-display text-[11px] font-light tracking-[0.16em] uppercase text-taupe/70 mb-3">
+                    <p className="font-display text-[11px] font-light tracking-[0.16em] uppercase text-taupe mb-3">
                       Highlights
                     </p>
                     <ul className="flex flex-col gap-2">
@@ -272,6 +286,7 @@ export default function BrasProductPage() {
                   onClick={() => {
                     if (!selectedSize) {
                       setShowSizeValidation(true);
+                      setPendingAddAfterSizeSelect(true);
                       sizeSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                       return;
                     }
@@ -285,8 +300,18 @@ export default function BrasProductPage() {
                   <AddToBag
                     ref={addToBagRef}
                     disabled={!selectedSize}
+                    onAdd={() => {
+                      if (selectedSize) {
+                        const color = selectedColor ?? activeColors[0]?.name ?? '';
+                        const img = color && galleryProduct.colorImages?.[color]?.[0]
+                          ? galleryProduct.colorImages[color][0]
+                          : galleryProduct.images[0] ?? '';
+                        addItem({ product: galleryProduct, color, size: selectedSize, image: img });
+                      }
+                    }}
                     onNoSizeClick={() => {
                       setShowSizeValidation(true);
+                      setPendingAddAfterSizeSelect(true);
                       sizeSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }}
                   />
@@ -311,6 +336,7 @@ export default function BrasProductPage() {
 
       {/* Floating Cart Bar */}
       <FloatingCartBar
+        ref={floatingCartBarRef}
         product={galleryProduct}
         selectedColor={selectedColor}
         selectedSize={selectedSize}
@@ -319,6 +345,7 @@ export default function BrasProductPage() {
         onSizeSelect={setSelectedSize}
         onNoSizeClick={() => {
           setShowSizeValidation(true);
+          setPendingAddAfterSizeSelect(true);
           sizeSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }}
       />

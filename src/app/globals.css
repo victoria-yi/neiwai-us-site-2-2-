@@ -7,10 +7,11 @@
   --color-sand: #EBEBE8;
   --color-section-gray: #F0F0F0;
   --color-stone: #C4C0B8;
-  --color-taupe: #8E8780;
+  --color-taupe: #6B6560; /* WCAG AA: 5.26:1 on cream (was 3.24:1) */
   --color-prose: #6B6560;
   --color-charcoal: #2C2824;
-  --color-accent: #8B7355;
+  --color-accent: #7A6348; /* 4.5:1+ on cream (WCAG AA) */
+  --color-sale: #B85030; /* WCAG AA: 4.96:1 on white (was #C25835 at 4.42:1) */
   --color-blush: #E5DDD5;
   --color-sage: #C5CDB8;
   --color-footer-cream: #F9F6F1;
@@ -58,7 +59,7 @@
 
   /* Focus states for keyboard navigation */
   :focus-visible {
-    outline: 2px solid #8B7355;
+    outline: 2px solid var(--color-accent);
     outline-offset: 2px;
     border-radius: 2px;
   }

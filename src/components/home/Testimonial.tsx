@@ -71,7 +71,7 @@ export default function Testimonial() {
             In Their Own Words
           </p>
           <span className="text-stone/40">·</span>
-          <p className="font-body text-[11px] sm:text-[12px] text-stone tabular-nums">
+          <p className="font-body text-[11px] sm:text-[12px] text-prose tabular-nums">
             {String(index + 1).padStart(2, '0')} / {String(reviews.length).padStart(2, '0')}
           </p>
         </div>

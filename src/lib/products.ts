@@ -1437,3 +1437,11 @@ export function getYouMayAlsoLikeBriefs(currentProduct: Product, limit: number =
   );
   return [...sameLine, ...otherBriefs].slice(0, limit);
 }
+
+/** "Frequently Bought Together" — related products by category. */
+export function getFrequentlyBoughtTogether(currentProduct: Product, limit: number = 4): Product[] {
+  if (currentProduct.category === 'bras') return getYouMayAlsoLikeBras(currentProduct, limit);
+  if (currentProduct.category === 'briefs') return getYouMayAlsoLikeBriefs(currentProduct, limit);
+  // leggings — use related products
+  return getRelatedProducts(currentProduct, limit);
+}

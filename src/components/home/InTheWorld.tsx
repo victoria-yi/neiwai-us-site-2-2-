@@ -52,7 +52,7 @@ export default function InTheWorld() {
       <FadeIn>
         <div className="text-center mb-11 lg:mb-16">
           <Overline className="text-[14px] md:text-[11px]">In the World</Overline>
-          <p className="font-body text-[13px] text-taupe mt-3">
+          <p className="font-body text-[13px] text-prose mt-3">
             Worn in life. Captured without filter.
           </p>
         </div>

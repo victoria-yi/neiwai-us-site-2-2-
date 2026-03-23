@@ -22,7 +22,7 @@ export default function EditorialBras() {
             <h2 className="font-display text-[28px] lg:text-[36px] font-light text-ink leading-tight">
               Beyond Barely Zero
             </h2>
-            <p className="font-body text-[14px] text-taupe mt-[9px]">
+            <p className="font-body text-[14px] text-prose mt-[9px]">
               Pure Comfort, Bandeau, Featherlight — more ways to feel nothing.
             </p>
           </div>

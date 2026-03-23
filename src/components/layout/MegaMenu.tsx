@@ -40,10 +40,9 @@ export default function MegaMenu({ menuKey, onClose, onMouseEnter }: MegaMenuPro
                       onClick={onClose}
                       className={`font-body text-[14px] transition-colors duration-300 ${
                         link.label === 'Shop All Bras'
-                          ? 'hover:opacity-80'
+                          ? 'text-sale hover:opacity-80'
                           : 'text-ink hover:text-accent'
                       }`}
-                      {...(link.label === 'Shop All Bras' && { style: { color: '#C25835' } })}
                     >
                       {link.label}
                     </Link>

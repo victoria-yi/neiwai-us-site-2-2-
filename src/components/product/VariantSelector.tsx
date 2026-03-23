@@ -47,7 +47,7 @@ export default function VariantSelector({
               </span>
               <span
                 className={`block font-body text-[11px] mt-0.5 transition-colors duration-300 ${
-                  isActive ? 'text-taupe' : 'text-stone group-hover:text-taupe'
+                  isActive ? 'text-taupe' : 'text-prose group-hover:text-taupe'
                 }`}
               >
                 {variant.sublabel}

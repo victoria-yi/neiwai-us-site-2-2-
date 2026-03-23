@@ -21,7 +21,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 mb-16 lg:mb-20 items-start">
           {/* Newsletter - left side */}
           <div className="lg:col-span-5">
-            <h3 className="font-pdp-title text-[30px] lg:text-[38px] font-light text-ink mb-4 -mt-[5px]">
+            <h3 className="font-pdp-title text-[28px] lg:text-[36px] font-light text-ink mb-4 -mt-[5px]">
               Stay In The Loop
             </h3>
             <p className="font-body text-[13px] text-ink/80 mb-6 leading-relaxed max-w-[280px]">
@@ -33,7 +33,7 @@ export default function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
-                className="flex-1 min-w-0 bg-transparent border-none text-ink placeholder:text-ink/50 font-body text-[13px] px-0 py-2 focus:outline-none focus:ring-0"
+                className="flex-1 min-w-0 bg-transparent border-none text-ink placeholder:text-prose font-body text-[13px] px-0 py-2 focus:outline-none focus:ring-0"
                 required
               />
               <button

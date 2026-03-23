@@ -103,20 +103,29 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                         >
                           <span className="text-taupe">{item.num}</span>
                           <span className="text-taupe"> | </span>
-                          <span className={'isSale' in item && item.isSale ? 'text-[#C25835]' : 'text-ink'}>{item.label}</span>
+                          <span className={'isSale' in item && item.isSale ? 'text-sale' : 'text-ink'}>{item.label}</span>
                         </Link>
                       </div>
                       {/* Right: sub-links — Bras: insert "Shop by need" (same weight as Bras) + extra spacing */}
                       <ul className="flex-1 min-w-0 space-y-2">
                         {brasColumns ? (
                           <>
+                            <li>
+                              <Link
+                                href="/bras?filter=barely-zero"
+                                onClick={onClose}
+                                className="font-body text-[12px] font-medium text-ink hover:text-taupe transition-colors block py-1"
+                              >
+                                Barely Zero
+                              </Link>
+                            </li>
                             {brasColumns[0].links.map((sub) => (
                               <li key={sub.label}>
                                 <Link
                                   href={sub.href}
                                   onClick={onClose}
                                   className={`font-body text-[12px] text-ink/90 hover:text-ink transition-colors block py-1 ${
-                                    sub.label.includes('Sale') ? 'text-[#C25835]' : ''
+                                    sub.label.includes('Sale') ? 'text-sale' : ''
                                   }`}
                                   {...('external' in sub && sub.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                                 >
@@ -133,7 +142,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                                   href={sub.href}
                                   onClick={onClose}
                                   className={`font-body text-[12px] text-ink/90 hover:text-ink transition-colors block py-1 ${
-                                    sub.label.includes('Sale') ? 'text-[#C25835]' : ''
+                                    sub.label.includes('Sale') ? 'text-sale' : ''
                                   }`}
                                   {...('external' in sub && sub.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                                 >
@@ -149,7 +158,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                                 href={sub.href}
                                 onClick={onClose}
                                 className={`font-body text-[12px] text-ink/90 hover:text-ink transition-colors block py-1 ${
-                                  sub.label.includes('Sale') ? 'text-[#C25835]' : ''
+                                  sub.label.includes('Sale') ? 'text-sale' : ''
                                 }`}
                                 {...('external' in sub && sub.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                               >
