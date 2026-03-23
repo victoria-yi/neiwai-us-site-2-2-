@@ -51,16 +51,14 @@ function applyFilter(filter: string) {
 
 function BrasPageContent() {
   const searchParams = useSearchParams();
-  const filterParam = searchParams.get('filter');
-  const initialFilter = (filterParam && FILTER_PARAM_MAP[filterParam]) || 'All';
-
-  const [activeFilter, setActiveFilter] = useState(initialFilter);
+  const [activeFilter, setActiveFilter] = useState('All');
 
   useEffect(() => {
+    const filterParam = searchParams.get('filter');
     if (filterParam && FILTER_PARAM_MAP[filterParam]) {
       setActiveFilter(FILTER_PARAM_MAP[filterParam]);
     }
-  }, [filterParam]);
+  }, [searchParams]);
   const [activeSort, setActiveSort] = useState('Curated');
 
   const filteredProducts = useMemo(() => {

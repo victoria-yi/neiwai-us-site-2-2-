@@ -12,9 +12,38 @@ interface ProductCardProps {
   index?: number;
 }
 
+function getDisplayImage(product: Product, colorName: string | null, colorIndex: number): string {
+  if (colorName && product.colorImages?.[colorName]?.length) {
+    return product.colorImages[colorName][0];
+  }
+  if (product.colors.length > 1 && product.images.length > 0) {
+    const idx = colorIndex % product.images.length;
+    return product.images[idx];
+  }
+  return product.images[0];
+}
+
+function getHoverImage(product: Product, colorName: string | null, colorIndex: number): string | undefined {
+  if (colorName && product.colorImages?.[colorName]?.length) {
+    const imgs = product.colorImages[colorName];
+    return imgs[1] ?? imgs[0];
+  }
+  if (product.colors.length > 1 && product.images.length > 1) {
+    const idx = (colorIndex + 1) % product.images.length;
+    return product.images[idx];
+  }
+  return product.hoverImage;
+}
+
 export default function ProductCard({ product, index = 0 }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const showHoverImage = isHovered && product.hoverImage;
+  const [selectedColor, setSelectedColor] = useState<string | null>(product.colors[0]?.name ?? null);
+  const selectedColorIndex = product.colors.findIndex((c) => c.name === selectedColor);
+  const safeColorIndex = selectedColorIndex >= 0 ? selectedColorIndex : 0;
+  const displayImage = getDisplayImage(product, selectedColor, safeColorIndex);
+  const hoverImageUrl = getHoverImage(product, selectedColor, safeColorIndex);
+  const showHoverImage = isHovered && hoverImageUrl;
+  const hasMultipleColors = product.colors.length > 1;
 
   return (
     <motion.div
@@ -33,7 +62,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
         <div className="relative aspect-[3/4] overflow-hidden bg-sand">
           {/* Primary image */}
           <Image
-            src={product.images[0]}
+            src={displayImage}
             alt={product.name}
             fill
             className={`object-cover object-top transition-all duration-500 ${
@@ -42,9 +71,9 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             sizes="(max-width: 768px) 50vw, 50vw"
           />
           {/* Hover image */}
-          {product.hoverImage && (
+          {hoverImageUrl && (
             <Image
-              src={product.hoverImage}
+              src={hoverImageUrl}
               alt={`${product.name} — alternate view`}
               fill
               className={`object-cover object-top transition-all duration-500 ${
@@ -61,17 +90,37 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             {product.name}
           </h3>
 
-          {/* Color dots — slightly larger */}
+          {/* Color dots — larger on PC, clickable when colorImages exist */}
           {product.colors.length > 1 && (
-            <div className="flex flex-wrap gap-1.5 md:gap-2 mt-2">
-              {product.colors.map((color) => (
-                <span
-                  key={color.name}
-                  className="w-[14px] h-[14px] md:w-[18px] md:h-[18px] rounded-full border border-sand"
-                  style={{ backgroundColor: color.hex }}
-                  title={color.name}
-                />
-              ))}
+            <div className="flex flex-wrap gap-1.5 md:gap-2 mt-2" onClick={(e) => e.stopPropagation()}>
+              {product.colors.map((color) => {
+                const isSelected = selectedColor === color.name;
+                const isClickable = hasMultipleColors && (product.colorImages?.[color.name]?.length ?? product.images.length > 0);
+                return isClickable ? (
+                  <button
+                    key={color.name}
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setSelectedColor(color.name);
+                    }}
+                    className={`w-[14px] h-[14px] lg:w-[24px] lg:h-[24px] rounded-full border transition-all duration-200 ${
+                      isSelected ? 'border-0 ring-[1px] ring-stone ring-offset-2 ring-offset-white' : 'border border-sand hover:border-stone'
+                    }`}
+                    style={{ backgroundColor: color.hex }}
+                    title={color.name}
+                    aria-label={`View ${color.name}`}
+                  />
+                ) : (
+                  <span
+                    key={color.name}
+                    className="w-[14px] h-[14px] lg:w-[24px] lg:h-[24px] rounded-full border border-sand"
+                    style={{ backgroundColor: color.hex }}
+                    title={color.name}
+                  />
+                );
+              })}
             </div>
           )}
 
