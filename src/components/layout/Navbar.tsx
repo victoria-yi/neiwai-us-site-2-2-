@@ -79,11 +79,12 @@ export default function Navbar() {
   const isHome = pathname === '/';
   const isCollectionWithDarkHero =
     pathname.startsWith('/bras') || pathname.startsWith('/briefs') || pathname.startsWith('/leggings');
+  const isOurWorld = pathname.startsWith('/our-world');
   // PDP pages have light background at top — always use black nav text/logo
   const isPDP = /^\/(bras|briefs|leggings)\/[^/]+$/.test(pathname);
   const isCollectionPage = pathname === '/bras' || pathname === '/briefs' || pathname === '/leggings';
   // Mobile collection: hero is hidden, so always use black nav
-  const isOverDarkBackground = (isHome || isCollectionWithDarkHero) && !isPDP && !(isMobile && isCollectionPage);
+  const isOverDarkBackground = (isHome || isCollectionWithDarkHero || isOurWorld) && !isPDP && !(isMobile && isCollectionPage);
 
   const navBg = scrolled || hoveredMenu || isPDP
     ? 'bg-cream/95 backdrop-blur-md border-b border-sand/50'

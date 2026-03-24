@@ -98,6 +98,9 @@
   .font-body {
     font-family: var(--font-body);
   }
+  .font-chinese-serif {
+    font-family: var(--font-chinese-serif), serif;
+  }
   .font-pdp-title {
     font-family: Optima, "Optima Nova", "Lucida Grande", sans-serif;
   }

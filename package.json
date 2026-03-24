@@ -6,7 +6,7 @@
     "node": ">=20.9.0"
   },
   "scripts": {
-    "dev": "next dev -p 3020 --webpack",
+    "dev": "next dev -p 3006 --webpack",
     "clean": "rm -rf .next",
     "dev:clean": "npm run clean && npm run dev",
     "build": "next build",
